@@ -1,0 +1,137 @@
+<section class="box box-primary">
+	<div class="box-header">
+		<h4 class="box-title">
+			At a glance
+		</h4>
+	</div>
+	<section class="box-body">
+		<div class="bg-success" style="margin-bottom: 25px; padding: 15px;">
+			<i class="fas fa-history"></i>
+			Last Order:
+			<strong>{{ getSales().lastOrderText|default('You do not have any orders yet!') }}</strong>
+		</div>
+		<div class="row">
+			<div class="col-lg-3 col-xs-6">
+				<a href="{{ absolute_url(path('admin_app_customer_list')) }}">
+					<div class="small-box bg-green">
+						<div class="inner">
+							<h3>{{ getSales().totalCustomers }}</h3>
+							<p>
+								Total Customer
+							</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-users" aria-hidden="true"></i>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-lg-3 col-xs-6">
+				<a href="{{ absolute_url(path('admin_app_order_list')) }}">
+					<div class="small-box bg-aqua">
+						<div class="inner">
+							<h3>{{ getSales().totalOrders }}</h3>
+							<p>
+								Total Orders
+							</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-shopping-cart" aria-hidden="true"></i>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-lg-3 col-xs-6">
+				<a href="{{ absolute_url(path('admin_app_order_list', {'filter[orderState][value]': 'Shipped'})) }}">
+					<div class="small-box bg-aqua">
+						<div class="inner">
+							<h3>{{ getSales().shippedOrders }}</h3>
+							<p>
+								Total Shipped
+							</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-truck-loading" aria-hidden="true"></i>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-lg-3 col-xs-6">
+				<a href="{{ absolute_url(path('admin_app_order_list', {'filter[orderState][value]': 'Completed'})) }}">
+					<div class="small-box bg-green">
+						<div class="inner">
+							<h3>{{ getSales().completedOrders }}</h3>
+							<p>
+								Total Completed
+							</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-check" aria-hidden="true"></i>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-lg-3 col-xs-6">
+				<a href="{{ absolute_url(path('admin_app_order_list', {'filter[orderState][value]': 'Pending'})) }}">
+					<div class="small-box bg-yellow">
+						<div class="inner">
+							<h3>{{ getSales().pendingOrders }}</h3>
+							<p>
+								Total Pending
+							</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-hourglass-half" aria-hidden="true"></i>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-lg-3 col-xs-6">
+				<a href="{{ absolute_url(path('admin_app_order_list', {'filter[orderState][value]': 'On Hold'})) }}">
+					<div class="small-box bg-yellow">
+						<div class="inner">
+							<h3>{{ getSales().onHoldOrders }}</h3>
+							<p>
+								Total On Hold
+							</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-exclamation" aria-hidden="true"></i>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-lg-3 col-xs-6">
+				<a href="{{ absolute_url(path('admin_app_order_list', {'filter[isPaid][value]': 2})) }}">
+					<div class="small-box bg-yellow">
+						<div class="inner">
+							<h3>{{ getSales().paymentPendingOrders }}</h3>
+							<p>
+								Total Peyment Pending
+							</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-coins" aria-hidden="true"></i>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="col-lg-3 col-xs-6">
+				<a href="{{ absolute_url(path('admin_app_order_list', {'filter[orderState][value]': 'Canceled'})) }}">
+					<div class="small-box bg-red">
+						<div class="inner">
+							<h3>{{ getSales().canceledOrders }}</h3>
+							<p>
+								Total Cancelled
+							</p>
+						</div>
+						<div class="icon">
+							<i class="fa fa-times" aria-hidden="true"></i>
+						</div>
+					</div>
+				</a>
+			</div>
+		</div>
+
+	</section>
+</section>

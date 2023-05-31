@@ -1,0 +1,14 @@
+sonata_admin:
+    title: 'ESHOP MART'
+    dashboard:
+        blocks:
+            - { type: sonata.admin.block.admin_list, position: left }
+    templates:
+        edit: 'Admin/edit.html.twig'
+        list: 'Admin/list.html.twig'
+        dashboard: 'Admin/dashboard.html.twig'
+
+sonata_block:
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]

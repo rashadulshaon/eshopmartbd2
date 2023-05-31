@@ -1,0 +1,57 @@
+a {
+  text-decoration: none;
+}
+
+/* Removing focus */
+.btn-check:checked+.btn-primary:focus,
+.btn-check:active+.btn-primary:focus,
+.btn-primary:active:focus,
+.btn-primary.active:focus,
+.show>.btn-primary.dropdown-toggle:focus,
+.navbar-toggler:focus,
+.form-selectgroup-input:focus+.form-selectgroup-label,
+input[type="radio" i]:focus,
+textarea:focus,
+.btn:focus,
+.form-control:focus,
+.btn-secondary:not(:disabled):not(.disabled):active:focus,
+.btn-secondary:not(:disabled):not(.disabled).active:focus,
+.show>.btn-secondary.dropdown-toggle:focus,
+button:focus,
+a:hover,
+a:focus,
+a:active,
+a:visited,
+input:focus {
+  outline: 0;
+  text-decoration: none;
+  box-shadow: none !important;
+}
+
+.cover-fit {
+  object-fit: cover;
+}
+
+.dropdown-menu.show {
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 17rem;
+  padding: 0.5rem;
+  align-items: center;
+  background-color: rgba(14, 30, 71, .8);
+  border: 1px solid #FFF;
+  border-radius: 6px;
+
+  li {
+    flex: 0 0 auto;
+    width: 50%;
+
+    .dropdown-item {
+      color: #fff;
+
+      &:hover {
+        background: #e9ecef21;
+      }
+    }
+  }
+}

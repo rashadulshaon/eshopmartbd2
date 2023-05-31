@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+{% block title %}Cart |
+	{{ siteTitle() }}
+{% endblock %}
+{% block body %}
+	<section class="container-fluid bg-light page-heading">
+		<h2 class="text-center text-uppercase">কার্ট</h2>
+	</section>
+	<section class="container cart">
+		{% for message in app.flashes('warning') %}
+			<div class="alert alert-danger">
+				{{ message }}
+			</div>
+		{% endfor %}
+		<div class="row bg-success text-white text-uppercase rounded m-0 p-3">
+			<div class="col-6">আইটেম</div>
+			<div class="col-4 d-none d-md-block">পরিমাণ</div>
+			<div class="col-6 col-md-2 text-end">টাকা</div>
+		</div>
+		{% for item in items %}
+			{% set product = item['product'] %}
+			{% include "includes/cart_item.html.twig" %}
+		{% else %}
+			<div class="text-center my-5">
+				<h3 class="mb-2">কার্টে কিছু নেই!</h3>
+				<a href="{{ path('app_home') }}">আমাদের নতুন কালেকশন দেখুন</a>
+			</div>
+		{% endfor %}
+		<div class="bg-secondary text-white text-uppercase text-end rounded p-4 mb-4">
+			<span class="d-block mb-3">সাব টোটাল: ৳{{ totalPrice }}</span>
+			<span>টোটাল: ৳{{ totalPrice }}</span>
+		</div>
+		<div class="text-end">
+			{% if stockOut %}
+				<span class="d-block text-danger fw-bold mb-3">স্টকে নেই এমন প্রডাক্ট রিমুভ করুন</span>
+			{% endif %}
+			<a href="{{path('app_checkout')}}" class="btn btn-primary text-uppercase ms-auto{{ stockOut ? ' disabled' : '' }}">চেক আউট করুন</a>
+		</div>
+	</section>
+{% endblock %}

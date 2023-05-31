@@ -1,0 +1,90 @@
+<link rel="stylesheet" href="{{ absolute_url(asset('build/app.css')) }}">
+<section class="container my-5">
+	<section
+		class="mb-5">
+		{# <img src="{{ absolute_url(asset('build/images/logo-dark.png')) }}" class="d-none mb-5 invoice-page-logo" width="206" height="48" alt="logo"> #}
+		<h1 class="h3">{{ siteTitle() }}</h1>
+		<div class="row">
+			<div class="col">
+				<h3 class="mb-2">
+					<span class="text-primary text-uppercase">Invoice:
+					</span>#{{ invoice.id }}</h3>
+				<span class="d-block mb-2">{{ invoice.createdAt|date() }}</span>
+				<span class="d-block">
+					<strong>Status:</strong>
+					{% if invoice.status == 'Paid' %}
+						<strong class="text-success">{{ invoice.status }}</strong>
+					{% elseif invoice.status == 'Unpaid' %}
+						<strong class="text-danger">{{ invoice.status }}</strong>
+					{% endif %}
+				</span>
+			</div>
+			<div class="col text-end invoice-action">
+				<a href="javascript:print()" class="btn btn-outline-primary text-uppercase">Print</a>
+			</div>
+		</div>
+	</section>
+
+	<section class="mb-5">
+		<h4 class="mb-2">{{ invoice.customerName }}</h4>
+		<span class="d-block mb-1">{{ invoice.address }},
+			{{ invoice.city }},
+			{{ invoice.stateLocation }}</span>
+		<span class="d-block">
+			<strong>Mobile:</strong>
+			+880{{ invoice.customerPhone }}</span>
+	</section>
+
+	<div class="table-responsive mb-5">
+		<table class="table">
+			<thead class="text-uppercase">
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Products</th>
+					<th scope="col">Qty</th>
+					<th scope="col">Price</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in invoice.items %}
+					<tr>
+						<th scope="row">{{ loop.index }}</th>
+						<td>{{ item.product }}</td>
+						<td>{{ item.quantity }}</td>
+						<td>BDT
+							{{ item.price }}</td>
+					</tr>
+				{% endfor %}
+
+				<tr>
+					<th scope="row"></th>
+					<td></td>
+					<td class="text-uppercase fw-bold">Sub Total</td>
+					<td>BDT
+						{{ invoice.totalCost }}</td>
+				</tr>
+				<tr>
+					<th scope="row"></th>
+					<td></td>
+					<td class="text-uppercase fw-bold">Delivery Charge</td>
+					<td>BDT 0</td>
+				</tr>
+				<tr>
+					<th scope="row"></th>
+					<td></td>
+					<td class="text-uppercase fw-bold">Total</td>
+					<td>BDT
+						{{ invoice.totalCost }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<section class="text-center text-uppercase">
+		{% if invoice.status == 'Paid' %}
+			<h2 class="fw-normal text-uppercase">Thanks for shopping with us.</h2>
+			{% elseif invoice.status == 'Unpaid' %}
+
+		{% endif %}
+	</section>
+</section>

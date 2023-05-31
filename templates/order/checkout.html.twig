@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Checkout |
+	{{ siteTitle() }}
+{% endblock %}
+
+{% block body %}
+	<section class="container-fluid bg-light page-heading">
+		<h2 class="text-center text-uppercase">চেক আউট</h2>
+	</section>
+	<section class="container my-5">
+		{% if items %}
+			<section class="row text-uppercase">
+				<section class="col-lg-4">
+					<div class="bg-white px-4">
+						<h4 class="text-uppercase mb-4">অর্ডার এর প্রডাক্ট</h4>
+						{% if fromCart %}
+							{% for item in items %}
+								{% set product = item.product %}
+								{% if product %}
+									<div {{ stimulus_controller('cart-input', {id: product.id, price: item.product.price} ) }} class="row mb-4">
+										<div class="col-9">
+											<div class="d-flex align-items-center">
+												<a href="{{ path('app_cart_update', {action: 'remove', id: product.id, fromCheckout: true}) }}">
+													<i class="fas fa-times text-muted me-2"></i>
+												</a>
+												<img class="cover-fit me-2" src="{{ vich_uploader_asset(product.firstImage) }}" alt="Product Image" height="72px" width="72px">
+												<div>
+													<span class="d-block text-muted mb-1">{{ product.name }}</span>
+													<div class="input-group cart-quantity">
+														<button {{ stimulus_action('cart-input', 'subtract') }} id="substractQuantity" class="btn btn-sm rounded-0 bg-transparent border-0 border-start border-top border-bottom border-primary q-btn" type="button">
+															<div {{stimulus_target('cart-input','subtractButton')}}>-</div>
+															<div {{stimulus_target('cart-input','subtractButtonLoader')}} class="spinner-grow d-none spinner-grow-sm" role="status">
+																<span class="visually-hidden">Loading...</span>
+															</div>
+														</button>
+														<input {{ stimulus_target('cart-input', 'quantity') }} type="number" id="quantity" class="form-control border-0 border-top border-bottom border-primary py-1" value="{{ item.quantity }}" min="1" disabled>
+														<button {{ stimulus_action('cart-input', 'add') }} id="addQuantity" class="btn btn-sm rounded-0 bg-transparent border-0 border-end border-top border-bottom border-primary q-btn" type="button">
+															<div {{stimulus_target('cart-input','addButton')}}>+</div>
+															<div {{stimulus_target('cart-input','addButtonLoader')}} class="spinner-grow d-none spinner-grow-sm" role="status">
+																<span class="visually-hidden">Loading...</span>
+															</div>
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-3 text-end">
+											<span>৳<span {{stimulus_target('cart-input','itemPrice')}}>{{ item.price }}</span>
+											</span>
+										</div>
+									</div>
+								{% endif %}
+							{% endfor %}
+						{% else %}
+							{% for item in items %}
+								{% set product = item.product %}
+								{% if product %}
+									<div {{ stimulus_controller('checkout-input', {id: product.id, price: item.product.price} ) }} class="row mb-4">
+										<div class="col-9">
+											<div class="d-flex align-items-center">
+												<img class="cover-fit me-2" src="{{ vich_uploader_asset(product.firstImage) }}" alt="Product Image" height="72px" width="72px">
+												<div>
+													<span class="d-block text-muted mb-1">{{ product.name }}</span>
+													<div class="input-group cart-quantity">
+														<button {{ stimulus_action('checkout-input', 'subtract') }} id="substractQuantity" class="btn btn-sm rounded-0 bg-transparent border-0 border-start border-top border-bottom border-primary q-btn" type="button">
+															<div {{stimulus_target('checkout-input','subtractButton')}}>-</div>
+															<div {{stimulus_target('checkout-input','subtractButtonLoader')}} class="spinner-grow d-none spinner-grow-sm" role="status">
+																<span class="visually-hidden">Loading...</span>
+															</div>
+														</button>
+														<input {{ stimulus_target('checkout-input', 'quantity') }} type="number" id="quantity" class="form-control border-0 border-top border-bottom border-primary py-1" value="{{ item.quantity }}" min="1" disabled>
+														<button {{ stimulus_action('checkout-input', 'add') }} id="addQuantity" class="btn btn-sm rounded-0 bg-transparent border-0 border-end border-top border-bottom border-primary q-btn" type="button">
+															<div {{stimulus_target('checkout-input','addButton')}}>+</div>
+															<div {{stimulus_target('checkout-input','addButtonLoader')}} class="spinner-grow d-none spinner-grow-sm" role="status">
+																<span class="visually-hidden">Loading...</span>
+															</div>
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-3 text-end">
+											<span>৳<span {{stimulus_target('checkout-input','itemPrice')}}>{{ item.price }}</span>
+											</span>
+										</div>
+									</div>
+								{% endif %}
+							{% endfor %}
+						{% endif %}
+						<hr class="mb-4">
+						<div class="mb-3">
+							<span class="text-muted">টোটাল:
+							</span>
+							<span class="float-end">৳{{ totalPrice|default(null) ? totalPrice : item.price * quantity }}</span>
+						</div>
+					</div>
+				</section>
+				<section class="col-lg-8 mb-2 mb-lg-0">
+					<div class="bg-white px-4 px-lg-5">
+						<h4 class="mb-4">কাস্টমার ইনফো</h4>
+						{{ form_start(checkoutForm) }}
+						{{ form_widget(checkoutForm) }}
+						<button class="btn btn-primary text-uppercase">অর্ডার কনফার্ম করুন</button>
+						{{ form_end(checkoutForm) }}
+					</div>
+				</section>
+			</section>
+		{% else %}
+			<div class="text-center my-5">
+				<h3 class="mb-2">আপনার কার্টে কিছু নেই!</h3>
+				<a href="{{ path('app_home') }}">আমাদের নতুন কালেকশন দেখুন</a>
+			</div>
+		{% endif %}
+	</section>
+{% endblock %}

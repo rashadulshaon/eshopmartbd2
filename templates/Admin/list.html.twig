@@ -1,0 +1,36 @@
+{% extends "@SonataAdmin/CRUD/list.html.twig" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<style>
+		.sonata-ba-list-field-one_to_many a {
+			display: block;
+		}
+	</style>
+{% endblock %}
+{% block list_table %}
+	{% if app.request.attributes.get('_route') == 'admin_app_order_list' %}
+		<div class="col-xs-12 col-md-12">
+			{% include "includes/statistic_data.html.twig" %}
+		</div>
+	{% elseif app.request.attributes.get('_route') == 'admin_app_setting_list' %}
+		<section class="content-header">
+
+			<div class="sticky-wrapper">
+				<nav class="navbar navbar-default" role="navigation">
+					<div class="container-fluid">
+						<ul class="nav navbar-nav navbar-left">
+							<li>
+								<a class="sonata-action-element" href="{{ path('admin_app_sitelogo_create') }}">
+									<i class="fas fa-upload" aria-hidden="true"></i>
+									Upload logo
+								</a>
+							</li>
+						</ul>
+					</div>
+				</nav>
+			</div>
+		</section>
+	{% endif %}
+	{{ parent() }}
+{% endblock %}

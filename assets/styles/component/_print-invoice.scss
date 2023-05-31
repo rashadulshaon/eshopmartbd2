@@ -1,0 +1,23 @@
+@media print {
+
+    header,
+    footer {
+        display: none;
+    }
+
+    .invoice-page-logo {
+        display: block !important;
+    }
+
+    .invoice-action {
+        display: none;
+    }
+
+    .go-home-btn {
+        display: none;
+    }
+
+    .pay-btn {
+        display: none;
+    }
+}

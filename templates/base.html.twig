@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>
+			{% block title %}
+				{{ siteTitle() }}
+			{% endblock %}
+		</title>
+		<link rel="icon" type="image/png" href="{{ asset('build/images/favicon.png') }}"/>
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+		{% for code in renderCodes() %}
+			{% if code.position == 'Header' %}
+				{{ code.mainCode|raw }}
+			{% endif %}
+		{% endfor %}
+	</head>
+	<body>
+		{% include "includes/header.html.twig" %}
+		{% block body %}{% endblock %}
+		{% include "includes/footer.html.twig" %}
+		{% for code in renderCodes() %}
+			{% if code.position == 'Footer' %}
+				{{ code.mainCode|raw }}
+			{% endif %}
+		{% endfor %}
+	</body>
+</html>

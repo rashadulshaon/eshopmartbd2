@@ -1,0 +1,41 @@
+<div {{ stimulus_controller('cart-input', {id: product.id, price: item.product.price} ) }} class="row text-uppercase align-items-center px-3 pt-4 pt-md-0">
+	<div class="col-md-6 py-md-4 d-flex align-items-center">
+		<a href="{{ path('app_cart_update', {action: 'remove', id: product.id}) }}">
+			<i class="fas fa-times text-muted me-2 me-md-4"></i>
+		</a>
+
+		<img class="cover-fit me-3 cart-product-img" src="{{ vich_uploader_asset(product.firstImage) }}" alt="Product Image">
+		<a href="{{ path('app_product_details', {id: product.id}) }}" class="product-title">
+			<h5 class="d-inline">{{ product.name }}</h5>
+			{% if product.isStockOut %}
+				<small class="d-block text-danger mt-1">Out of stock!</small>
+			{% endif %}
+		</a>
+
+	</div>
+	<div class="col-10 col-md-4 py-4">
+
+		<div class="input-group cart-quantity ms-4 ms-md-0">
+			<button {{ stimulus_action('cart-input', 'subtract') }} id="substractQuantity" class="btn bg-transparent border-0 border-start border-top border-bottom border-primary q-btn" type="button">
+				<div {{stimulus_target('cart-input','subtractButton')}}>-</div>
+				<div {{stimulus_target('cart-input','subtractButtonLoader')}} class="spinner-grow d-none spinner-grow-sm" role="status">
+					<span class="visually-hidden">Loading...</span>
+				</div>
+			</button>
+			<input {{ stimulus_target('cart-input', 'quantity') }} type="number" id="quantity" class="form-control border-0 border-top border-bottom border-primary" value="{{ item.quantity }}" min="1" disabled>
+			<button {{ stimulus_action('cart-input', 'add') }} id="addQuantity" class="btn bg-transparent border-0 border-end border-top border-bottom border-primary q-btn" type="button">
+				<div {{stimulus_target('cart-input','addButton')}}>+</div>
+				<div {{stimulus_target('cart-input','addButtonLoader')}} class="spinner-grow d-none spinner-grow-sm" role="status">
+					<span class="visually-hidden">Loading...</span>
+				</div>
+			</button>
+
+		</div>
+
+
+	</div>
+	<div class="col-2 py-4 text-end">
+		৳<span {{stimulus_target('cart-input','itemPrice')}}>{{ item.price }}</span>
+	</div>
+</div>
+<hr class="my-0 d-md-none">

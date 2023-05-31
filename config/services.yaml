@@ -1,0 +1,138 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    App\EntityListener\AdminEntityListener:
+        tags:
+            - {
+                  name: "doctrine.orm.entity_listener",
+                  event: "prePersist",
+                  entity: 'App\Entity\Admin',
+              }
+            - {
+                  name: "doctrine.orm.entity_listener",
+                  event: "postPersist",
+                  entity: 'App\Entity\Admin',
+              }
+            - {
+                  name: "doctrine.orm.entity_listener",
+                  event: "preUpdate",
+                  entity: 'App\Entity\Admin',
+              }
+
+    App\EntityListener\ProductEntityListener:
+        tags:
+            - {
+                  name: "doctrine.orm.entity_listener",
+                  event: "postPersist",
+                  entity: 'App\Entity\Product',
+              }
+            - {
+                  name: "doctrine.orm.entity_listener",
+                  event: "postRemove",
+                  entity: 'App\Entity\Product',
+              }
+
+    App\EntityListener\OrderEntityListener:
+        tags:
+            - {
+                  name: "doctrine.orm.entity_listener",
+                  event: "postPersist",
+                  entity: 'App\Entity\Order',
+              }
+            - {
+                  name: "doctrine.orm.entity_listener",
+                  event: "postRemove",
+                  entity: 'App\Entity\Order',
+              }
+            - {
+                  name: "doctrine.orm.entity_listener",
+                  event: "postUpdate",
+                  entity: 'App\Entity\Order',
+              }
+
+    admin.product:
+        class: App\Admin\ProductAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Product, manager_type: orm, group: Product, label: Product, on_top: true, icon: fas fa-box }
+
+    admin.brand:
+        class: App\Admin\BrandAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Brand, manager_type: orm, group: Brand, label: Brand, on_top: true, icon: fas fa-tags }
+
+    admin.category:
+        class: App\Admin\CategoryAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Category, manager_type: orm, group: Category, label: Category, on_top: true, icon: fas fa-list }
+    
+    admin.customer:
+        class: App\Admin\CustomerAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Customer, controller: ~, manager_type: orm, group: Customer, label: Customer, on_top: true, icon: fas fa-users }
+
+    admin.order:
+        class: App\Admin\OrderAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Order, controller: App\Controller\OrderAdminController, manager_type: orm, group: Order, label: Order, on_top: true, icon: fas fa-shopping-cart }
+
+    admin.report:
+        class: App\Admin\ReportAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Report, controller: ~, manager_type: orm, group: Report, label: Report, on_top: true, icon: fas fa-chart-line }
+
+    admin.shipping_method:
+        class: App\Admin\ShippingMethodAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\ShippingMethod, controller: ~, manager_type: orm, group: Shipping Method, label: Shipping Method, on_top: true, icon: fas fa-map-marker-alt }
+
+    admin.page:
+        class: App\Admin\PageAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Page, manager_type: orm, group: Page, label: Page, on_top: true, icon: fas fa-globe }
+
+    admin.admin:
+        class: App\Admin\AdminAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Admin, controller: ~, manager_type: orm, group: Admin, label: Admin, on_top: true, icon: fas fa-user-tie }
+    
+    admin.code:
+        class: App\Admin\CodeAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Code, controller: ~, manager_type: orm, group: Code, label: Code, on_top: true, icon: fas fa-code }
+
+    admin.setting:
+        class: App\Admin\SettingAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Setting, controller: ~, manager_type: orm, group: Setting, label: Setting, on_top: true, icon: fas fa-cog }
+
+    admin.order_item:
+        class: App\Admin\OrderItemAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\OrderItem, controller: ~, manager_type: orm, group: admin, label: OrderItem }
+
+    admin.site_logo:
+        class: App\Admin\SiteLogoAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\SiteLogo, controller: ~, manager_type: orm, group: admin, label: SiteLogo }

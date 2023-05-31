@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Tiro+Bangla&display=swap');
+$primary: #E50914;
+$secondary: #13161D;
+$warning: #F8BC24;
+$purple: #0E1E47;
+$danger: #E74C3C;
+$success: #07b354;
+$light: #F8F9FA;
+$dark: #343A40;
+$info: #0dcaf0;
+// $body-bg: #E3E5E8;
+// $body-color: #F5F5F5;
+$font-size-base: 1rem;
+$line-height-base: 1.2;
+$font-weight-base: 500;
+$h1-font-size: 2.8125rem; // 45px
+$h2-font-size: 2.1875rem; // 35px
+$h3-font-size: 1.75rem; // 28px
+$h4-font-size: 1.5rem; // 24px
+$h5-font-size: 1.125rem; // 18px
+$h6-font-size: 0.875rem; // 14px
+$headings-margin-bottom: 0px;
+$font-family-base: 'Tiro Bangla', serif;
+$headings-font-family: 'Tiro Bangla', serif;
+$headings-font-weight: 700;
+$navbar-padding-y: 0;
+$navbar-nav-link-padding-x: 28px;
+$btn-font-size: 1rem;
+$input-btn-padding-y: 10px;
+$input-btn-padding-x: 18px;
+$btn-border-radius: 0px;
+// $btn-font-weight: 700;
+$btn-hover-color: #1040BA;
+$input-bg: transparent;
+$input-border-radius: 4px;
+$input-border-color: #CAD5E0;
+$input-placeholder-color: #898989;
+$min-contrast-ratio: 1;
+
+$container-max-widths: (
+        sm: 540px,
+        md: 720px,
+        lg: 960px,
+        xl: 1140px,
+        xxl: 1409px
+);
+$spacer: 1rem !default;
+$spacers: (
+        0: 0,
+        1: $spacer * .25,
+        2: $spacer * .5,
+        3: $spacer,
+        4: $spacer * 1.5,
+        5: $spacer * 3,
+        6: $spacer * 2.5,
+);
+$theme-colors: (
+        "primary": $primary,
+        "secondary": $secondary,
+        "success": $success,
+        "warning": $warning,
+        "purple": $purple,
+        "danger": $danger,
+        "light": $light,
+        "dark": $dark,
+        "info": $info
+);
+
+@import "~bootstrap/scss/bootstrap";
+@import '~lightgallery/scss/lightgallery';
+@import "component/media-queries";
+@import "component/print-invoice";
+@import "global";
+@import "main";
+@import "~@fortawesome/fontawesome-free/css/all.css";

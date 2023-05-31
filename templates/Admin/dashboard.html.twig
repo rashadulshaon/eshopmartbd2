@@ -1,0 +1,9 @@
+{% extends "@SonataAdmin/Core/dashboard.html.twig" %}
+
+{% block content %}
+	{% if not is_granted('ROLE_SUPER_ADMIN') %}
+		{% include "includes/statistic_data.html.twig" %}
+	{% else %}
+		{{ parent() }}
+	{% endif %}
+{% endblock %}

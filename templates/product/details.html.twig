@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	{{ product.name }}
+	|
+	{{ siteTitle() }}
+{% endblock %}
+{% block body %}
+	<section class="container mt-5">
+		<div class="product-details">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="row mb-5">
+						<div class="col-lg-6">
+							<div class="d-lg-flex mb-3 mb-lg-0">
+								<div id="productImgCarousel" class="carousel carousel-dark slide product-img-wrapper">
+									<div class="carousel-inner" {{ stimulus_controller('lightbox') }} data-lightbox-options-value='{"selector": ".carousel-item a"}'>
+										<div class="carousel-item active">
+											<a href="{{ vich_uploader_asset(product.firstImage) }}">
+												<img class="cover-fit w-100" src="{{ vich_uploader_asset(product.firstImage) }}" height="425px" width="380px" alt="Product Image 1">
+											</a>
+										</div>
+										{% if product.secondImage is not null %}
+											<div class="carousel-item">
+												<a href="{{ vich_uploader_asset(product.secondImage) }}">
+													<img class="cover-fit w-100" src="{{ vich_uploader_asset(product.secondImage) }}" height="425px" width="380px" alt="Product Image 2">
+												</a>
+											</div>
+										{% endif %}
+										{% if product.thirdImage is not null %}
+											<div class="carousel-item">
+												<a href="{{ vich_uploader_asset(product.thirdImage) }}">
+													<img class="cover-fit w-100" src="{{ vich_uploader_asset(product.thirdImage) }}" height="425px" width="380px" alt="Product Image 3">
+												</a>
+											</div>
+										{% endif %}
+									</div>
+									<button class="carousel-control-prev" type="button" data-bs-target="#productImgCarousel" data-bs-slide="prev">
+										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+										<span class="visually-hidden">Previous</span>
+									</button>
+									<button class="carousel-control-next" type="button" data-bs-target="#productImgCarousel" data-bs-slide="next">
+										<span class="carousel-control-next-icon" aria-hidden="true"></span>
+										<span class="visually-hidden">Next</span>
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="px-md-4 col-lg-6" {{stimulus_controller('product-page')}}>
+							<input type="hidden" value="{{product.id}}" {{stimulus_target('product-page', 'productId')}}>
+							<h1 class="h2 mb-1">{{ product.name }}</h1>
+							<h3 class="h1 text-primary mb-4">৳{{ product.price }}<span class="text-muted text-decoration-line-through fs-5 ms-3 align-middle">৳{{ product.regularPrice }}</span>
+							</h3>
+							<span class="d-block text-muted mb-2">পরিমাণ</span>
+							<div class="input-group mb-4">
+								<button {{stimulus_action('product-page', 'subtraction')}} id="substractQuantity" class="btn bg-transparent border-0 border-start border-top border-bottom border-primary{{ product.isStockOut ? ' disabled' : '' }}" type="button">-</button>
+								<input {{stimulus_target('product-page', 'quantity')}} type="number" id="quantity" class="form-control border-0 border-top border-bottom border-primary{{ product.isStockOut ? ' disabled' : '' }}" value="1" min="1" {{ product.isStockOut ? ' disabled' : '' }}>
+								<button {{stimulus_action('product-page', 'addition')}} id="addQuantity" class="btn bg-transparent border-0 border-end border-top border-bottom border-primary{{ product.isStockOut ? ' disabled' : '' }}" type="button">+</button>
+							</div>
+							{% if product.isStockOut %}
+								<strong class="d-block text-danger mb-3">স্টক শেষ!</strong>
+							{% endif %}
+							<div class="d-flex">
+								<button {{stimulus_action('product-page', 'directCheckout')}} class="btn btn-lg w-100 rounded-0 btn-primary me-2 text-uppercase{{ product.isStockOut ? ' disabled' : '' }}">
+									<i class="fas fa-shopping-cart me-1"></i>অর্ডার করুন</button>
+								<button {{stimulus_action('product-page', 'addToCart')}} class="btn btn-lg w-100 rounded-0 border-secondary text-uppercase{{ product.isStockOut ? ' disabled' : '' }}">+ কার্টে রাখুন</button><br>
+							</div>
+							{% for phone in orderPhones() %}
+								{% if phone != 'X' %}
+									<a class="btn btn-lg d-block rounded-0 btn-success mt-3 text-uppercase{{ product.isStockOut ? ' disabled' : '' }}" href="tel:{{ phone }}">
+										<i class="fas fa-phone-alt me-1"></i>
+										{{ phone }}</a>
+								{% endif %}
+							{% endfor %}
+							<div {{stimulus_target('product-page', 'addedToCartMessage')}} id="addedToCartMessage" class="alert alert-primary mt-2 d-none" role="alert">
+								Added to cart!
+							</div>
+							<div class="my-5">
+								<hr>
+								{% for shippingMethod in shippingMethods %}
+									<i class="fas fa-truck text-primary me-1"></i>
+									{{ shippingMethod.title }}
+									ডেলিভারি খরচ:
+									<strong class="text-info">৳{{ shippingMethod.cost }}</strong><br>
+									<hr>
+								{% endfor %}
+							</div>
+							<span class="d-block mb-2">ক্যাটাগরি:
+								<a class="mb-2 product-cat" href="{{ path('app_product_category', {id: product.category.id}) }}">{{ product.category.name }}</a>
+							</span>
+							<span class="d-block mb-2">ব্র্যান্ড:
+								<a class="product-cat" href="{{ path('app_product_brand', {id: product.brand.id}) }}">{{ product.brand.name }}</a>
+							</span>
+							<p class="text-muted mb-4">
+								{{ product.summary }}
+							</p>
+						</div>
+					</div>
+					{% if product.description %}
+						<div class="card mb-5">
+							<div class="card-header">
+								প্রোডাক্টের বিস্তারিত
+							</div>
+							<div class="card-body">
+								<article class="product-description">
+									{{ product.description|raw }}
+								</article>
+							</div>
+						</div>
+					{% endif %}
+				</div>
+				<div class="col-md-4">
+					<div class="card">
+						<div class="card-header">
+							প্রোয়োজনীয় প্রোডাক্ট
+						</div>
+						<div class="card-body">
+							{% for product in relatedProducts %}
+								<div class="d-flex mb-3">
+									<img class="cover-fit me-3" src="{{ vich_uploader_asset(product.firstImage) }}" height="75px" width="75px" alt="Product Image">
+									<div>
+										<a href="{{ path('app_product_details', {id: product.id}) }}">
+											<h1 class="fs-6 mb-2">{{ product.name }}</h1>
+										</a>
+										<span class="text-muted small text-decoration-line-through">৳{{ product.regularPrice }}</span>
+										<span class="text-primary fw-bold">৳{{ product.price }}</span>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}

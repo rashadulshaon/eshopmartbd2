@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ page.title }}
+	|
+	{{ siteTitle() }}
+{% endblock %}
+
+{% block body %}
+	<section class="container-fluid bg-light page-heading">
+		<h2 class="text-center text-uppercase">{{ page.title }}</h2>
+	</section>
+	<section class="container my-5">
+		<article class="bg-white p-5">
+			{{ page.description|raw }}
+		</article>
+	</section>
+{% endblock %}
