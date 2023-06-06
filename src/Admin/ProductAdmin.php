@@ -30,7 +30,7 @@ final class ProductAdmin extends AbstractAdmin
                 'required' => false
             ])
             ->add('category', ModelType::class)
-            ->add('wholesalePrice', IntegerType::class)
+            ->add('wholesalePrice', IntegerType::class, ['required' => false])
             ->add('regularPrice', TextType::class, ['required' => true])
             ->add('price')
             ->add('isStockOut')
