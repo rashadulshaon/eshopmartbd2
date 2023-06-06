@@ -87,9 +87,11 @@
 							<span class="d-block mb-2">ক্যাটাগরি:
 								<a class="mb-2 product-cat" href="{{ path('app_product_category', {id: product.category.id}) }}">{{ product.category.name }}</a>
 							</span>
-							<span class="d-block mb-2">ব্র্যান্ড:
-								<a class="product-cat" href="{{ path('app_product_brand', {id: product.brand.id}) }}">{{ product.brand.name }}</a>
-							</span>
+							{% if product.brand %}
+								<span class="d-block mb-2">ব্র্যান্ড:
+									<a class="product-cat" href="{{ path('app_product_brand', {id: product.brand.id}) }}">{{ product.brand.name }}</a>
+								</span>
+							{% endif %}
 							<p class="text-muted mb-4">
 								{{ product.summary }}
 							</p>

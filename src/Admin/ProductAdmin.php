@@ -26,7 +26,9 @@ final class ProductAdmin extends AbstractAdmin
     {
         $form
             ->add('name')
-            ->add('brand', ModelType::class)
+            ->add('brand', ModelType::class, [
+                'required' => false
+            ])
             ->add('category', ModelType::class)
             ->add('wholesalePrice', IntegerType::class)
             ->add('regularPrice', TextType::class, ['required' => true])
