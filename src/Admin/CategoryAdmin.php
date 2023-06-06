@@ -19,7 +19,7 @@ final class CategoryAdmin extends AbstractAdmin
     {
         $form
             ->add('name')
-            ->add('image', ProductImageType::class, ['required' => $this->isCurrentRoute('create')]);
+            ->add('image', ProductImageType::class, ['required' => false]);
     }
 
     protected function configureListFields(ListMapper $list): void

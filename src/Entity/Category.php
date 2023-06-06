@@ -22,7 +22,7 @@ class Category
     private $products;
 
     #[ORM\OneToOne(targetEntity: ProductImage::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private $image;
 
     public function __construct()
@@ -87,7 +87,7 @@ class Category
         return $this->image;
     }
 
-    public function setImage(ProductImage $image): self
+    public function setImage(?ProductImage $image): self
     {
         $this->image = $image;
 

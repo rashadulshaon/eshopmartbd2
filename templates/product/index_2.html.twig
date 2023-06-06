@@ -71,7 +71,8 @@
 			<div class="row shop-row">
 				{% for category in categories %}
 					<div class="col-6 col-lg-2 mb-3">
-						<div class="rounded-3 py-5 text-center" style="background-image: url('{{ vich_uploader_asset(category.image) }}') !important; background-size: cover;background-position: center;">
+						<div class="rounded-3 py-5 text-center" {% if category.image %} style="background-image: url('{{ vich_uploader_asset(category.image) }}') !important; background-size: cover;background-position: center;" {% else %} style="background-color: #1fc8db;
+														    background-image: linear-gradient(140deg, #EADEDB 0%, #BC70A4 50%, #ff005c 75%);" {% endif %}>
 							<a href="{{ path('app_product_category', {id: category.id}) }}" class="btn btn-primary rounded-3 px-4 border border-3 border-warning">
 								{{ category.name }}
 							</a>
