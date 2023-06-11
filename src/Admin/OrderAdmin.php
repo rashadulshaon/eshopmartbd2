@@ -87,8 +87,6 @@ final class OrderAdmin extends AbstractAdmin
             ])
             ->add('shippingMethod')
             ->add('orderItems')
-            ->add('subTotal')
-            ->add('deliveryCost')
             ->add('totalCost')
             ->add('isPaid', null, [
                 'editable' => true
