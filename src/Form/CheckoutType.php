@@ -4,13 +4,11 @@ namespace App\Form;
 
 use App\Entity\Order;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\IsTrue;
 
 class CheckoutType extends AbstractType
 {
@@ -25,19 +23,7 @@ class CheckoutType extends AbstractType
             ->add('shippingMethod', null, ['label' => false, 'attr' => ['placeholder' => 'শিপিং মেথড']])
             ->add('address', TextType::class, ['label' => false, 'attr' => ['placeholder' => 'লোকেশন']])
             ->add('note', TextareaType::class, ['label' => false, 'attr' => ['placeholder' => 'নোট লিখতে পারেন (প্রোডাক্টের সাইজ/কালার ইত্যাদি)'], 'required' => false])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-                'label' => 'I agree with the <a href="#">terms and conditions</a> of ESHOP MART BD',
-                'label_html' => true,
-                'row_attr' => [
-                    'class' => 'mb-4'
-                ]
-            ]);
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
