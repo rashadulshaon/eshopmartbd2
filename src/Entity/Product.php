@@ -22,6 +22,7 @@ class Product
     #[ORM\Column(type: 'text', nullable: true)]
     private $description;
 
+    #[Assert\LessThan(propertyPath: 'regularPrice')]
     #[ORM\Column(type: 'string', length: 255)]
     private $price;
 
