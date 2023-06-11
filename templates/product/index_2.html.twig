@@ -29,32 +29,28 @@
 				{% for product in latestProducts %}
 					<div class="col-6 col-lg-2">
 						<div class="mb-4 product-card shadow-sm border">
-							<div class="product-image bg-white">
-								<img class="cover-fit product-archive-img" src="{{ vich_uploader_asset(product.firstImage) }}" height="200px" width="100%" alt="Product Image">
-								<div class="hover-div text-start p-4">
-									<div {{ stimulus_controller('index-cart-btn', { infoUrl: path('app_cart_update', { action: 'add', id: product.id, quantity: 1 } ) } ) }} class="justify-content-between flex-wrap text-center d-flex flex-column hover-content-wrapper">
-										<a href="{{ path('app_product_category', {id: product.category.id}) }}" class="bg-primary text-white rounded-pill small px-3 py-2 align-self-start">{{ product.category.name }}</a>
-										{% if product.isIsStockOut %}
-											<strong class="bg-black text-danger align-self-center position-absolute top-50 translate-middle-y px-3 py-2">স্টকে নেই</strong>
-										{% else %}
-											<button {{ stimulus_action('index-cart-btn', 'addToCart') }} class="btn btn-primary align-self-center text-uppercase position-absolute top-50 translate-middle-y">+ কার্টে রাখুন</button>
-										{% endif %}
-									</div>
+							<a href="{{ path('app_product_details', {id: product.id}) }}" class="product-title">
+								<div class="product-image bg-white">
+									<span class="position-absolute top-0 start-100 translate-middle badge bg-danger px-2">
+										{{ ((product.regularPrice - product.price) / product.regularPrice) * 100 ~ '%' }}
+										<br>
+										ছাড়
+										<span class="visually-hidden">unread messages</span>
+									</span>
+									<img class="cover-fit product-archive-img" src="{{ vich_uploader_asset(product.firstImage) }}" height="200px" width="100%" alt="Product Image">
 								</div>
-							</div>
-							<div class="bg-white">
-								<div class="p-3">
-									<a href="{{ path('app_product_details', {id: product.id}) }}" class="product-title">
+								<div class="bg-white">
+									<div class="p-3">
 										<h5 class="mb-2 fs-6">{{ product.name }}</h5>
 										<span class="text-decoration-line-through product-price small">৳{{ product.regularPrice }}</span>
 										<span class="text-primary small fw-bold">৳{{ product.price }}</span>
-									</a>
+									</div>
+									<a href="{{ path('app_checkout', {id:product.id, qty:1}) }}" class="btn btn-primary w-100 {% if product.isIsStockOut %}disabled{% endif %}">
+										<small>
+											<i class="fas fa-shopping-cart me-1"></i>অর্ডার করুন</a>
+									</small>
 								</div>
-								<a href="{{ path('app_checkout', {id:product.id, qty:1}) }}" class="btn btn-primary w-100 {% if product.isIsStockOut %}disabled{% endif %}">
-									<small>
-										<i class="fas fa-shopping-cart me-1"></i>অর্ডার করুন</a>
-								</small>
-							</div>
+							</a>
 						</div>
 					</div>
 				{% endfor %}
@@ -72,7 +68,7 @@
 				{% for category in categories %}
 					<div class="col-6 col-lg-2 mb-3">
 						<div class="rounded-3 py-5 text-center" {% if category.image %} style="background-image: url('{{ vich_uploader_asset(category.image) }}') !important; background-size: cover;background-position: center;" {% else %} style="background-color: #1fc8db;
-														    background-image: linear-gradient(140deg, #EADEDB 0%, #BC70A4 50%, #ff005c 75%);" {% endif %}>
+																																																																																																																																																																																													    background-image: linear-gradient(140deg, #EADEDB 0%, #BC70A4 50%, #ff005c 75%);" {% endif %}>
 							<a href="{{ path('app_product_category', {id: category.id}) }}" class="btn btn-primary rounded-3 px-4 border border-3 border-warning">
 								{{ category.name }}
 							</a>
@@ -101,32 +97,28 @@
 			{% for product in products %}
 				<div class="col-6 col-lg-2">
 					<div class="mb-4 product-card shadow-sm border">
-						<div class="product-image bg-white">
-							<img class="cover-fit product-archive-img" src="{{ vich_uploader_asset(product.firstImage) }}" height="200px" width="100%" alt="Product Image">
-							<div class="hover-div text-start p-4">
-								<div {{ stimulus_controller('index-cart-btn', { infoUrl: path('app_cart_update', { action: 'add', id: product.id, quantity: 1 } ) } ) }} class="justify-content-between flex-wrap text-center d-flex flex-column hover-content-wrapper">
-									<a href="{{ path('app_product_category', {id: product.category.id}) }}" class="bg-primary text-white rounded-pill small px-3 py-2 align-self-start">{{ product.category.name }}</a>
-									{% if product.isIsStockOut %}
-										<strong class="bg-black text-danger align-self-center position-absolute top-50 translate-middle-y px-3 py-2">স্টকে নেই</strong>
-									{% else %}
-										<button {{ stimulus_action('index-cart-btn', 'addToCart') }} class="btn btn-primary align-self-center text-uppercase position-absolute top-50 translate-middle-y">+ কার্টে রাখুন</button>
-									{% endif %}
-								</div>
+						<a href="{{ path('app_product_details', {id: product.id}) }}" class="product-title">
+							<div class="product-image bg-white">
+								<span class="position-absolute top-0 start-100 translate-middle badge bg-danger px-2">
+									{{ ((product.regularPrice - product.price) / product.regularPrice) * 100 ~ '%' }}
+									<br>
+									ছাড়
+									<span class="visually-hidden">unread messages</span>
+								</span>
+								<img class="cover-fit product-archive-img" src="{{ vich_uploader_asset(product.firstImage) }}" height="200px" width="100%" alt="Product Image">
 							</div>
-						</div>
-						<div class="bg-white">
-							<div class="p-3">
-								<a href="{{ path('app_product_details', {id: product.id}) }}" class="product-title">
+							<div class="bg-white">
+								<div class="p-3">
 									<h5 class="mb-2 fs-6">{{ product.name }}</h5>
 									<span class="text-decoration-line-through product-price small">৳{{ product.regularPrice }}</span>
 									<span class="text-primary small fw-bold">৳{{ product.price }}</span>
-								</a>
+								</div>
+								<a href="{{ path('app_checkout', {id:product.id, qty:1}) }}" class="btn btn-primary w-100 {% if product.isIsStockOut %}disabled{% endif %}">
+									<small>
+										<i class="fas fa-shopping-cart me-1"></i>অর্ডার করুন</a>
+								</small>
 							</div>
-							<a href="{{ path('app_checkout', {id:product.id, qty:1}) }}" class="btn btn-primary w-100 {% if product.isIsStockOut %}disabled{% endif %}">
-								<small>
-									<i class="fas fa-shopping-cart me-1"></i>অর্ডার করুন</a>
-							</small>
-						</div>
+						</a>
 					</div>
 				</div>
 			{% endfor %}
