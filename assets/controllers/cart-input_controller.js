@@ -15,6 +15,9 @@ export default class extends Controller {
         this.itemPriceTarget.innerHTML = Number(this.itemPriceTarget.innerHTML) + this.priceValue;
         let cartBadge = document.getElementById('cartBadge');
         cartBadge.innerText = +cartBadge.innerText + 1;
+
+        let totalPrice = document.getElementById('totalPrice').innerHTML;
+        document.getElementById('totalPrice').innerHTML = Number(totalPrice) + Number(this.priceValue);
     }
 
     async subtract() {
@@ -29,6 +32,9 @@ export default class extends Controller {
             this.itemPriceTarget.innerHTML = Number(this.itemPriceTarget.innerHTML) - this.priceValue;
             let cartBadge = document.getElementById('cartBadge');
             cartBadge.innerText = +cartBadge.innerText - 1;
+
+            let totalPrice = document.getElementById('totalPrice').innerHTML;
+            document.getElementById('totalPrice').innerHTML = Number(totalPrice) - Number(this.priceValue);
         }
     }
 }

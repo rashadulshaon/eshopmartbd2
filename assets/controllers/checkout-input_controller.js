@@ -13,6 +13,9 @@ export default class extends Controller {
         this.addButtonTarget.classList.remove('d-none');
         this.addButtonLoaderTarget.classList.add('d-none');
         this.itemPriceTarget.innerHTML = Number(this.itemPriceTarget.innerHTML) + this.priceValue;
+
+        let totalPrice = document.getElementById('totalPrice').innerHTML;
+        document.getElementById('totalPrice').innerHTML = Number(totalPrice) + Number(this.priceValue);
     }
 
     async subtract() {
@@ -25,6 +28,9 @@ export default class extends Controller {
             this.subtractButtonTarget.classList.remove('d-none');
             this.subtractButtonLoaderTarget.classList.add('d-none');
             this.itemPriceTarget.innerHTML = Number(this.itemPriceTarget.innerHTML) - this.priceValue;
+
+            let totalPrice = document.getElementById('totalPrice').innerHTML;
+            document.getElementById('totalPrice').innerHTML = Number(totalPrice) - Number(this.priceValue);
         }
     }
 }

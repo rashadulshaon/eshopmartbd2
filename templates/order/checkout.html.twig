@@ -92,7 +92,8 @@
 						<div class="mb-3">
 							<span class="text-muted">টোটাল:
 							</span>
-							<span class="float-end">৳{{ totalPrice|default(null) ? totalPrice : item.price * quantity }}</span>
+							<span class="float-end">৳<span id="totalPrice">{{ totalPrice|default(null) ? totalPrice : item.price * quantity }}</span>
+							</span>
 						</div>
 					</div>
 				</section>

@@ -12,7 +12,7 @@
 				{{ message }}
 			</div>
 		{% endfor %}
-		<div class="row bg-success text-white text-uppercase rounded m-0 p-3">
+		<div class="row bg-secondary text-white text-uppercase m-0 p-3">
 			<div class="col-6">আইটেম</div>
 			<div class="col-4 d-none d-md-block">পরিমাণ</div>
 			<div class="col-6 col-md-2 text-end">টাকা</div>
@@ -26,9 +26,9 @@
 				<a href="{{ path('app_home') }}">আমাদের নতুন কালেকশন দেখুন</a>
 			</div>
 		{% endfor %}
-		<div class="bg-secondary text-white text-uppercase text-end rounded p-4 mb-4">
-			<span class="d-block mb-3">সাব টোটাল: ৳{{ totalPrice }}</span>
-			<span>টোটাল: ৳{{ totalPrice }}</span>
+		<div class="bg-secondary text-white text-uppercase text-end p-4 mb-4">
+			<span>টোটাল: ৳<span id="totalPrice">{{ totalPrice }}</span>
+			</span>
 		</div>
 		<div class="text-end">
 			{% if stockOut %}
