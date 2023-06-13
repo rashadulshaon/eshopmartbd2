@@ -31,7 +31,7 @@ class ShippingMethod
 
     public function __toString()
     {
-        return $this->title;
+        return $this->title . ' [৳' . $this->cost . ']';
     }
 
     public function getId(): ?int
