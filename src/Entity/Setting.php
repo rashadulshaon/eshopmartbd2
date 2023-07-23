@@ -13,10 +13,10 @@ class Setting
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(name: '`key`', type: 'string', length: 255)]
     private $key;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(name: '`value`', type: 'string', length: 255)]
     private $value;
 
     public function __toString()
