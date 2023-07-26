@@ -67,7 +67,7 @@ final class OrderAdmin extends AbstractAdmin
             ->add('deliveryCost')
             ->add('totalCost')
             ->add('isPaid')
-            ->add('placedAt')
+            ->add('orderDate')
             ->add('isUnique')
             ->add('orderState');
     }
@@ -149,7 +149,7 @@ final class OrderAdmin extends AbstractAdmin
         $totalPrice = 0;
 
         foreach ($order->getOrderItems() as $item) {
-            $item->setPrice($item->getProduct()->getPrice() * $item->getQuantity())    ;
+            $item->setPrice($item->getProduct()->getPrice() * $item->getQuantity());
             $totalPrice += $item->getPrice();
         }
 
