@@ -121,7 +121,7 @@
 									<img class="cover-fit me-3" src="{{ vich_uploader_asset(product.firstImage) }}" height="75px" width="75px" alt="Product Image">
 									<div>
 										<a href="{{ path('app_product_details', {id: product.id}) }}">
-											<h1 class="fs-6 mb-2">{{ product.name }}</h1>
+											<h1 class="fs-6 mb-2 product-name">{{ product.name }}</h1>
 										</a>
 										<span class="text-muted small text-decoration-line-through">৳{{ product.regularPrice }}</span>
 										<span class="text-primary fw-bold">৳{{ product.price }}</span>
@@ -134,4 +134,15 @@
 			</div>
 		</div>
 	</section>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+const productTitleElements = document.querySelectorAll(".product-name");
+
+productTitleElements.forEach(element => {
+const longText = element.textContent;
+const shortenedText = longText.slice(0, 35) + "...";
+element.textContent = shortenedText;
+});
+});
+	</script>
 {% endblock %}
