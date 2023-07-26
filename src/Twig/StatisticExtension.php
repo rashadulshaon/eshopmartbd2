@@ -38,6 +38,7 @@ class StatisticExtension extends AbstractExtension
             'totalCustomers' => count($this->customerRepo->findAll()),
             'totalOrders' => count($this->orderRepo->findAll()),
             'pendingOrders' => count($this->orderRepo->findBy(['orderState' => 'Pending'])),
+            'processingOrders' => count($this->orderRepo->findBy(['orderState' => 'Processing'])),
             'onHoldOrders' => count($this->orderRepo->findBy(['orderState' => 'On Hold'])),
             'paymentPendingOrders' => count($this->orderRepo->findBy(['isPaid' => false])),
             'shippedOrders' => count($this->orderRepo->findBy(['orderState' => 'Shipped'])),
