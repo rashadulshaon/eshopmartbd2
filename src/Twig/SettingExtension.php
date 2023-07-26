@@ -21,7 +21,12 @@ class SettingExtension extends AbstractExtension
             new TwigFunction('siteTitle', [$this, 'siteTitle']),
             new TwigFunction('siteLogo', [$this, 'siteLogo']),
             new TwigFunction('sitePhone', [$this, 'sitePhone']),
-            new TwigFunction('orderPhones', [$this, 'orderPhones'])
+            new TwigFunction('siteEmail', [$this, 'siteEmail']),
+            new TwigFunction('shopAddress', [$this, 'shopAddress']),
+            new TwigFunction('orderPhones', [$this, 'orderPhones']),
+            new TwigFunction('facebookUrl', [$this, 'facebookUrl']),
+            new TwigFunction('instagramUrl', [$this, 'instagramUrl']),
+            new TwigFunction('youtubeUrl', [$this, 'youtubeUrl'])
         ];
     }
 
@@ -40,6 +45,16 @@ class SettingExtension extends AbstractExtension
         return $this->settingRepo->findOneBy(['key' => 'Site Phone Number'])->getValue();
     }
 
+    public function siteEmail()
+    {
+        return $this->settingRepo->findOneBy(['key' => 'Site Email Address'])->getValue();
+    }
+
+    public function shopAddress()
+    {
+        return $this->settingRepo->findOneBy(['key' => 'Shop Address'])->getValue();
+    }
+
     public function orderPhones()
     {
         $phones = [
@@ -49,5 +64,20 @@ class SettingExtension extends AbstractExtension
         ];
 
         return $phones;
+    }
+
+    public function facebookUrl()
+    {
+        return $this->settingRepo->findOneBy(['key' => 'Facebook URL'])->getValue();
+    }
+
+    public function instagramUrl()
+    {
+        return $this->settingRepo->findOneBy(['key' => 'Instagram URL'])->getValue();
+    }
+
+    public function youtubeUrl()
+    {
+        return $this->settingRepo->findOneBy(['key' => 'Youtube URL'])->getValue();
     }
 }

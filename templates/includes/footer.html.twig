@@ -8,9 +8,8 @@
 				<h1 class="h3">{{ siteTitle() }}</h1>
 				<p>
 					<span class="d-block mb-2">সিজনের সবকিছু পান আপনার হাতের নাগালে...</span>
-					<a class="d-block mb-3" href="mailto:info@mcmes.net">contact@eshopmartbd.com</a>
-					<span class="d-block">Road no XXX, House no XXX,
-						<br>Dhaka, Bangladesh</span>
+					<a class="d-block mb-3" href="mailto:{{ siteEmail() }}">{{ siteEmail() }}</a>
+					<span class="d-block">{{ shopAddress() }}</span>
 				</p>
 			</div>
 			<div class="col-lg-2"></div>
@@ -21,22 +20,17 @@
 					<h5 class="text-uppercase fw-600 mb-2">আমাদের সোশ্যাল মিডিয়া</h5>
 					<ul class="list-inline">
 						<li class="list-inline-item">
-							<a href="#">
+							<a href="{{ facebookUrl() }}">
 								<i class="fab fa-facebook"></i>
 							</a>
 						</li>
 						<li class="list-inline-item">
-							<a href="#">
+							<a href="{{ instagramUrl() }}">
 								<i class="fab fa-instagram"></i>
 							</a>
 						</li>
 						<li class="list-inline-item">
-							<a href="#">
-								<i class="fab fa-twitter"></i>
-							</a>
-						</li>
-						<li class="list-inline-item">
-							<a href="#">
+							<a href="{{ youtubeUrl() }}">
 								<i class="fab fa-youtube"></i>
 							</a>
 						</li>
