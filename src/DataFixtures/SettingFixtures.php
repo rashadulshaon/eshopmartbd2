@@ -12,7 +12,7 @@ class SettingFixtures extends Fixture
     {
         $siteName = (new Setting())
             ->setKey('Site Name')
-            ->setValue('ESHOP MART BD');
+            ->setValue('eBuyHat');
 
         $manager->persist($siteName);
 
@@ -42,7 +42,7 @@ class SettingFixtures extends Fixture
 
         $siteEmail = (new Setting())
             ->setKey('Site Email Address')
-            ->setValue('contact@eshopmartbd.com');
+            ->setValue('contact@eBuyHat.com');
 
         $manager->persist($siteEmail);
 

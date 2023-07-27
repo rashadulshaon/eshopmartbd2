@@ -15,7 +15,7 @@ class AdminFixtures extends Fixture
     public function load(ObjectManager $om): void
     {
         $admin = new Admin();
-        $admin->setEmail('admin@eshopmartbd.com');
+        $admin->setEmail('admin@eBuyHat.com');
         $admin->setPlainPassword('asdf456');
         $admin->setRoles(["ROLE_ADMIN"]);
         $om->persist($admin);
