@@ -1,5 +1,6 @@
 sonata_admin:
     title: 'ESHOP MART'
+    title_logo: admin/logo.png
     dashboard:
         blocks:
             - { type: sonata.admin.block.admin_list, position: left }
@@ -7,6 +8,13 @@ sonata_admin:
         edit: 'Admin/edit.html.twig'
         list: 'Admin/list.html.twig'
         dashboard: 'Admin/dashboard.html.twig'
+    options:
+        skin: skin-blue
+    # search: false
+    show_mosaic_button: false
+    assets:
+        extra_stylesheets:
+            - 'admin/custom.css'
 
 sonata_block:
     blocks:

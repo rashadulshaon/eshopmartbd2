@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+body,
+table.sonata-ba-list {
+    font-size: 16px;
+}
+
+.main-header .logo {
+    text-align: left;
+}
+
+.breadcrumb>.active {
+    color: white;
+}
+
+.sidebar-menu li a .fas {
+    margin-right: 15px;
+}
