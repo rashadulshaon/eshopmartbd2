@@ -24,6 +24,11 @@ final class OrderAdmin extends AbstractAdmin
             'ask_confirmation' => false,
         ];
 
+        $actions['invoice'] = [
+            'label'            => 'Generate Invoice',
+            'ask_confirmation' => false,
+        ];
+
         return $actions;
     }
 
