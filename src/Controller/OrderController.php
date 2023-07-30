@@ -112,8 +112,7 @@ class OrderController extends AbstractController
                 $newCustomer = (new Customer())
                     ->setName($checkoutFormData->getCustomerName())
                     ->setPhone($checkoutFormData->getCustomerPhone())
-                    ->setLocation($checkoutFormData->getAddress())
-                ;
+                    ->setLocation($checkoutFormData->getAddress());
 
                 $this->em->persist($newCustomer);
 
@@ -135,10 +134,10 @@ class OrderController extends AbstractController
 
             // Sending email to admin
             $adminEmail = (new Email())
-                ->from('system@eshopmartbd.com')
-                ->to('admin@eshopmartbd.com')
-                ->subject("{$order->getCustomerName()}'s Order in ESHOP MART BD")
-                ->text("{$order->getCustomerName()} has placed an order in ESHOP MART BD. Order ID: #{$order->getId()}");
+                ->from('system@eBuyHat.com')
+                ->to('admin@eBuyHat.com')
+                ->subject("{$order->getCustomerName()}'s Order in eBuyHat")
+                ->text("{$order->getCustomerName()} has placed an order in eBuyHat. Order ID: #{$order->getId()}");
 
             $mailer->send($adminEmail);
 

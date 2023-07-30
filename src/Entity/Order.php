@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Enum\OrderStateEnum;
 use App\Repository\OrderRepository;
+use DateTime;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -66,9 +67,13 @@ class Order
     #[ORM\Column(type: 'integer')]
     private $deliveryCost = 0;
 
+    #[ORM\Column(type: 'date', nullable: true)]
+    private $orderDate;
+
     public function __construct()
     {
         $this->placedAt = new DateTimeImmutable();
+        $this->orderDate = new DateTime();
         $this->orderItems = new ArrayCollection();
     }
 
@@ -287,6 +292,18 @@ class Order
     public function setDeliveryCost(int $deliveryCost): self
     {
         $this->deliveryCost = $deliveryCost;
+
+        return $this;
+    }
+
+    public function getOrderDate(): ?\DateTimeInterface
+    {
+        return $this->orderDate;
+    }
+
+    public function setOrderDate(?\DateTimeInterface $orderDate): self
+    {
+        $this->orderDate = $orderDate;
 
         return $this;
     }

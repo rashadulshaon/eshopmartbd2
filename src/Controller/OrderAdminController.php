@@ -47,4 +47,13 @@ final class OrderAdminController extends CRUDController
 
         return $this->json($orders);
     }
+
+    public function batchActionInvoice(ProxyQueryInterface $query)
+    {
+        $data = $query->execute();
+
+        return $this->render('order/invoice.html.twig', [
+            'orders' => $data
+        ]);
+    }
 }
