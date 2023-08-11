@@ -12,7 +12,9 @@ class OrderItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('product')
+            ->add('products', null, [
+                'multiple' => true
+            ])
             ->add('quantity')
         ;
     }

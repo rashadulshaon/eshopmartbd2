@@ -16,9 +16,9 @@
 						<h4 class="text-uppercase mb-4">অর্ডার এর প্রডাক্ট</h4>
 						{% if fromCart %}
 							{% for item in items %}
-								{% set product = item.product %}
+								{% set product = item.products[0] %}
 								{% if product %}
-									<div {{ stimulus_controller('cart-input', {id: product.id, price: item.product.price} ) }} class="row mb-4">
+									<div {{ stimulus_controller('cart-input', {id: product.id, price: product.price} ) }} class="row mb-4">
 										<div class="col-9">
 											<div class="d-flex align-items-center">
 												<a href="{{ path('app_cart_update', {action: 'remove', id: product.id, fromCheckout: true}) }}">
@@ -54,9 +54,9 @@
 							{% endfor %}
 						{% else %}
 							{% for item in items %}
-								{% set product = item.product %}
+								{% set product = item.products[0] %}
 								{% if product %}
-									<div {{ stimulus_controller('checkout-input', {id: product.id, price: item.product.price} ) }} class="row mb-4">
+									<div {{ stimulus_controller('checkout-input', {id: product.id, price: product.price} ) }} class="row mb-4">
 										<div class="col-9">
 											<div class="d-flex align-items-center">
 												<img class="cover-fit me-2" src="{{ vich_uploader_asset(product.firstImage) }}" alt="Product Image" height="72px" width="72px">

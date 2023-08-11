@@ -17,14 +17,11 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-use Symfony\Component\Notifier\Notification\Notification;
-use Symfony\Component\Notifier\NotifierInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class OrderController extends AbstractController
 {
     private $em;
-    private $notifier;
     private $session;
     private $productRepo;
     private $customerRepo;
@@ -33,14 +30,12 @@ class OrderController extends AbstractController
     public function __construct(
         EntityManagerInterface $em,
         RequestStack $requestStack,
-        NotifierInterface $notifier,
         ProductRepository $productRepo,
         CustomerRepository $customerRepo,
         OrderRepository $orderRepo,
     ) {
         $this->em = $em;
         $this->session = $requestStack->getSession();
-        $this->notifier = $notifier;
         $this->productRepo = $productRepo;
         $this->orderRepo = $orderRepo;
         $this->customerRepo = $customerRepo;
@@ -77,7 +72,7 @@ class OrderController extends AbstractController
 
         foreach ($items as $item) {
             // Out of stock product check
-            if ($item->getProduct()->isIsStockOut()) {
+            if ($item->getProducts()[0]->isIsStockOut()) {
                 $this->addFlash('warning', 'আপনার কাঙ্খিত প্রোডাক্টটি বর্তমানে আমাদের স্টকে নেই।');
 
                 return $this->redirectToRoute('app_cart');
@@ -160,7 +155,7 @@ class OrderController extends AbstractController
         if ($product) {
             $items = array_map(
                 fn ($item) => (new OrderItem())
-                    ->setProduct($this->productRepo->findOneBy(['id' => $item['product']->getId()]))
+                    ->addProduct($this->productRepo->findOneBy(['id' => $item['product']->getId()]))
                     ->setQuantity($item['quantity'])
                     ->setPrice($item['product']->getPrice() * $item['quantity']),
                 $this->session->get('checkoutItem') ?? []
@@ -168,7 +163,7 @@ class OrderController extends AbstractController
         } else {
             $items = array_map(
                 fn ($item) => (new OrderItem())
-                    ->setProduct($this->productRepo->findOneBy(['id' => $item['product']->getId()]))
+                    ->addProduct($this->productRepo->findOneBy(['id' => $item['product']->getId()]))
                     ->setQuantity($item['quantity'])
                     ->setPrice($item['product']->getPrice() * $item['quantity']),
                 $this->session->get('itemsInCart') ?? []

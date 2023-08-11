@@ -16,7 +16,7 @@
 	</head>
 	<body>
 		{% for order in orders %}
-			<div class="pb-3 mb-3" style="border-bottom: 1px dotted tomato;">
+			<div class="pb-3 mb-3" style="border-bottom: 1px dashed tomato;">
 				<table class="table table-bordered">
 					<tbody>
 						<tr>
@@ -80,7 +80,7 @@
 						</tr>
 						{% for item in order.orderItems %}
 							<tr>
-								<td>{{item.product.name}}</td>
+								<td>{{item.products[0].name}}</td>
 								<td>{{item.quantity}}</td>
 								<td>{{item.price}}</td>
 							</tr>

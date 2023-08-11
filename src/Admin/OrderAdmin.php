@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Entity\Customer;
+use App\Entity\Order;
 use App\Enum\OrderStateEnum;
 use App\Form\OrderItemType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -14,6 +15,7 @@ use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 final class OrderAdmin extends AbstractAdmin
 {
@@ -140,12 +142,14 @@ final class OrderAdmin extends AbstractAdmin
 
     public function prePersist(object $order): void
     {
+        $this->singleProductValidation($order);
         $this->calculatePrice($order);
         $this->setCustomerInfo($order);
     }
 
     public function preUpdate(object $order): void
     {
+        $this->singleProductValidation($order);
         $this->calculatePrice($order);
     }
 
@@ -154,7 +158,7 @@ final class OrderAdmin extends AbstractAdmin
         $totalPrice = 0;
 
         foreach ($order->getOrderItems() as $item) {
-            $item->setPrice($item->getProduct()->getPrice() * $item->getQuantity());
+            $item->setPrice($item->getProducts()[0]->getPrice() * $item->getQuantity());
             $totalPrice += $item->getPrice();
         }
 
@@ -185,5 +189,14 @@ final class OrderAdmin extends AbstractAdmin
         }
 
         return $choices;
+    }
+
+    private function singleProductValidation(Order $order)
+    {
+        foreach($order->getOrderItems() as $item) {
+            if (count($item->getProducts()) != 1) {
+                throw new BadRequestHttpException('Select only 1 product per item');
+            }
+        }
     }
 }
