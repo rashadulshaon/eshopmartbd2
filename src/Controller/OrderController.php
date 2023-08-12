@@ -136,10 +136,11 @@ class OrderController extends AbstractController
 
             $mailer->send($adminEmail);
 
+            $this->session->set('lastOrderId', $order->getId());
 
-            return $this->redirectToRoute('app_order_successful', [
-                'id' => $order->getId()
-            ]);
+            $params['id'] = $product ? $product->getId() : null;
+
+            return $this->redirectToRoute('app_order_successful', $params);
         }
 
         return $this->render('order/checkout.html.twig', [
@@ -151,10 +152,10 @@ class OrderController extends AbstractController
     }
 
     #[Route('/order_successful/{id}', name: 'app_order_successful')]
-    public function orderSuccessful(Order $order): Response
+    public function orderSuccessful(?int $id = null): Response
     {
         return $this->render('order/successful.html.twig', [
-            'order' => $order
+            'orderId' => $this->session->get('lastOrderId')
         ]);
     }
 
