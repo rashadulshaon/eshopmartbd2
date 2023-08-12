@@ -13,9 +13,19 @@ class OrderItemType extends AbstractType
     {
         $builder
             ->add('products', null, [
-                'multiple' => true
+                'multiple' => true,
+                'row_attr' => [
+                    'class' => 'itemProduct col-md-6'
+                ]
             ])
-            ->add('quantity')
+            ->add('quantity', null, [
+                'row_attr' => [
+                    'class' => 'itemQuantity col-md-6',
+                ],
+                'attr' => [
+                    'min' => "1"
+                ]
+            ])
         ;
     }
 

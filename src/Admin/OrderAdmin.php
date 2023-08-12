@@ -14,6 +14,7 @@ use Sonata\AdminBundle\Form\Type\CollectionType;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -44,21 +45,73 @@ final class OrderAdmin extends AbstractAdmin
     {
         $form
             ->add('customer', ModelListType::class, [
-                'class' => Customer::class
+                'class' => Customer::class,
+                'row_attr' => [
+                    'class' => 'col-md-12'
+                ]
             ])
-            ->add('shippingMethod')
             ->add('orderItems', CollectionType::class, [
                 'entry_type' => OrderItemType::class,
                 'by_reference' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
+                'row_attr' => [
+                    'class' => 'col-md-12 orderItems'
+                ]
             ])
-            ->add('note')
-            ->add('discount')
-            ->add('isPaid')
-            ->add('isUnique')
+            ->add('subTotal', IntegerType::class, [
+                'mapped' => false,
+                'row_attr' => [
+                    'class' => 'col-md-3'
+                ],
+                'attr' => [
+                    'class' => 'subTotal'
+                ],
+                'disabled' => true
+            ])
+            ->add('shippingMethod', null, [
+                'label' => 'Delivery Cost',
+                'row_attr' => [
+                    'class' => 'col-md-3'
+                ],
+                'attr' => [
+                    'class' => 'shippingMethod'
+                ],
+            ])
+            ->add('discount', null, [
+                'row_attr' => [
+                    'class' => 'col-md-3'
+                ],
+                'attr' => [
+                    'class' => 'discount',
+                    'min' => '0'
+                ],
+            ])
+            ->add('grandTotal', IntegerType::class, [
+                'mapped' => false,
+                'row_attr' => [
+                    'class' => 'col-md-3'
+                ],
+                'attr' => [
+                    'class' => 'grandTotal'
+                ],
+                'disabled' => true
+            ])
+            ->add('isPaid', null, [
+                'row_attr' => [
+                    'class' => 'col-md-2'
+                ]
+            ])
+            ->add('note', null, [
+                'row_attr' => [
+                    'class' => 'col-md-12'
+                ]
+            ])
             ->add('orderState', EnumType::class, [
-                'class' => OrderStateEnum::class
+                'class' => OrderStateEnum::class,
+                'row_attr' => [
+                    'class' => 'col-md-12'
+                ]
             ]);
     }
 
@@ -129,9 +182,9 @@ final class OrderAdmin extends AbstractAdmin
             ->add('address')
             ->add('shippingMethod')
             ->add('orderItems')
-            ->add('discount')
             ->add('subTotal')
             ->add('deliveryCost')
+            ->add('discount')
             ->add('totalCost')
             ->add('isPaid')
             ->add('placedAt')

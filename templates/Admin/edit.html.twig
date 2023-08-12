@@ -8,3 +8,51 @@
 		}
 	</style>
 {% endblock %}
+
+{% block javascripts %}
+	{% if (getClass(object) == "App\\Entity\\Order") %}
+		{{ parent() }}
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+const orderItemsContainer = document.querySelector(".orderItems");
+const subTotalField = document.querySelector(".subTotal");
+const deliveryChargeField = document.querySelector(".shippingMethod");
+const discountField = document.querySelector(".discount");
+const grandTotalField = document.querySelector(".grandTotal");
+
+const calculateAndPrintTotal = () => {
+let totalAmount = 0;
+
+document.querySelectorAll(".sonata-collection-row").forEach((row) => {
+const liTag = row.querySelector(".itemProduct li");
+const quantityInput = row.querySelector(".itemQuantity input");
+
+if (liTag && quantityInput) {
+const priceMatch = liTag.getAttribute("title").match(/\d+/);
+const price = priceMatch ? parseFloat(priceMatch[0]) : 0;
+const quantity = parseFloat(quantityInput.value) || 0;
+
+totalAmount += isNaN(price) || isNaN(quantity) ? 0 : price * quantity;
+}
+});
+
+subTotalField.value = totalAmount;
+
+const deliveryCharge = parseFloat(deliveryChargeField.options[deliveryChargeField.selectedIndex].text.match(/\d+/)[0]);
+const discount = parseFloat(discountField.value) || 0;
+
+grandTotalField.value = totalAmount + deliveryCharge - discount;
+};
+
+const updateValues = () => {
+calculateAndPrintTotal();
+};
+
+document.addEventListener("click", updateValues);
+
+// Update values when the page is first loaded
+setTimeout(updateValues, 0); // Run after the DOM is ready
+});
+		</script>
+	{% endif %}
+{% endblock %}
