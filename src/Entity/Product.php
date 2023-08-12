@@ -70,7 +70,13 @@ class Product
 
     public function __toString()
     {
-        return $this->name . ' [৳' . $this->price . ']';
+        $str = $this->name . ' [৳' . $this->price . ']';
+
+        if ($this->isStockOut) {
+            $str .= ' (Out of Stock)';
+        }
+
+        return $str;
     }
 
     public function getId(): ?int
