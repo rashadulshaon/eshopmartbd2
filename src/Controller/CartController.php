@@ -57,9 +57,14 @@ class CartController extends AbstractController
             if ($fromCheckout) {
                 return $this->redirectToRoute('app_checkout');
             }
-
-            return $this->redirectToRoute('app_cart');
         }
+
+        if ($action == 'remove') {
+            unset($this->itemsInCart[$product->getId()]);
+            $this->session->set('itemsInCart', $this->itemsInCart);
+        }
+
+        return $this->redirectToRoute('app_cart');
     }
 
     #[Route('/checkout_update/{action}/{id}/{quantity}', name: 'app_checkout_update')]
