@@ -137,8 +137,8 @@ class OrderController extends AbstractController
             $mailer->send($adminEmail);
 
 
-            return $this->render('order/successful.html.twig', [
-                'order' => $order
+            return $this->redirectToRoute('app_order_successful', [
+                'id' => $order->getId()
             ]);
         }
 
@@ -147,6 +147,14 @@ class OrderController extends AbstractController
             'totalPrice' => $totalPrice,
             'checkoutForm' => $checkoutForm->createView(),
             'fromCart' => $fromCart
+        ]);
+    }
+
+    #[Route('/order_successful/{id}', name: 'app_order_successful')]
+    public function orderSuccessful(Order $order): Response
+    {
+        return $this->render('order/successful.html.twig', [
+            'order' => $order
         ]);
     }
 
