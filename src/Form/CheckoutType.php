@@ -20,7 +20,7 @@ class CheckoutType extends AbstractType
                 'placeholder' => 'ফোন নাম্বার',
                 'pattern' => '[0-9]{11}'
             ]])
-            ->add('shippingMethod', null, ['label' => false, 'attr' => ['placeholder' => 'শিপিং মেথড']])
+            ->add('shippingMethod', null, ['label' => false, 'attr' => ['placeholder' => 'শিপিং মেথড', 'class' => 'shippingMethod']])
             ->add('address', TextType::class, ['label' => false, 'attr' => ['placeholder' => 'লোকেশন']])
             ->add('note', TextareaType::class, ['label' => false, 'attr' => ['placeholder' => 'নোট লিখতে পারেন (প্রোডাক্টের সাইজ/কালার ইত্যাদি)'], 'required' => false])
         ;
