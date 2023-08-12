@@ -10,8 +10,8 @@
 {% endblock %}
 
 {% block javascripts %}
+	{{ parent() }}
 	{% if (getClass(object) == "App\\Entity\\Order") %}
-		{{ parent() }}
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
 const orderItemsContainer = document.querySelector(".orderItems");
