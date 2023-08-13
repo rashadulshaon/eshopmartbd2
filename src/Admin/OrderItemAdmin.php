@@ -22,7 +22,7 @@ final class OrderItemAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $show): void
     {
         $show
-            ->add('product')
+            ->add('products')
             ->add('quantity')
             ->add('price')
         ;

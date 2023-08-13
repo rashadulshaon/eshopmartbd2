@@ -16,9 +16,9 @@
 						<h4 class="text-uppercase mb-4">অর্ডার এর প্রডাক্ট</h4>
 						{% if fromCart %}
 							{% for item in items %}
-								{% set product = item.product %}
+								{% set product = item.products[0] %}
 								{% if product %}
-									<div {{ stimulus_controller('cart-input', {id: product.id, price: item.product.price} ) }} class="row mb-4">
+									<div {{ stimulus_controller('cart-input', {id: product.id, price: product.price} ) }} class="row mb-4">
 										<div class="col-9">
 											<div class="d-flex align-items-center">
 												<a href="{{ path('app_cart_update', {action: 'remove', id: product.id, fromCheckout: true}) }}">
@@ -54,9 +54,9 @@
 							{% endfor %}
 						{% else %}
 							{% for item in items %}
-								{% set product = item.product %}
+								{% set product = item.products[0] %}
 								{% if product %}
-									<div {{ stimulus_controller('checkout-input', {id: product.id, price: item.product.price} ) }} class="row mb-4">
+									<div {{ stimulus_controller('checkout-input', {id: product.id, price: product.price} ) }} class="row mb-4">
 										<div class="col-9">
 											<div class="d-flex align-items-center">
 												<img class="cover-fit me-2" src="{{ vich_uploader_asset(product.firstImage) }}" alt="Product Image" height="72px" width="72px">
@@ -90,9 +90,21 @@
 						{% endif %}
 						<hr class="mb-4">
 						<div class="mb-3">
-							<span class="text-muted">টোটাল:
+							<span class="text-muted">সাব টোটাল:
 							</span>
 							<span class="float-end">৳<span id="totalPrice">{{ totalPrice|default(null) ? totalPrice : item.price * quantity }}</span>
+							</span>
+						</div>
+						<div class="mb-3">
+							<span class="text-muted">ডেলিভারি খরচ:
+							</span>
+							<span class="float-end">৳<span id="deliveryCharge">0</span>
+							</span>
+						</div>
+						<div class="mb-3">
+							<span class="text-muted">টোটাল:
+							</span>
+							<span class="float-end">৳<span id="grandTotal">0</span>
 							</span>
 						</div>
 					</div>
@@ -114,4 +126,33 @@
 			</div>
 		{% endif %}
 	</section>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+const shippingMethodSelect = document.getElementById("checkout_shippingMethod");
+const deliveryChargeTag = document.getElementById("deliveryCharge");
+const subTotalTag = document.getElementById("totalPrice");
+const grandTotalTag = document.getElementById("grandTotal");
+
+const updateValues = () => {
+const selectedOptionText = shippingMethodSelect.options[shippingMethodSelect.selectedIndex].text;
+const deliveryChargeMatch = selectedOptionText.match(/\d+/);
+
+if (deliveryChargeMatch && deliveryChargeMatch[0]) {
+const deliveryCharge = parseInt(deliveryChargeMatch[0]);
+deliveryChargeTag.textContent = deliveryCharge;
+
+const subTotalAmount = parseFloat(subTotalTag.textContent);
+const grandTotalAmount = subTotalAmount + deliveryCharge;
+grandTotalTag.textContent = grandTotalAmount;
+}
+};
+
+shippingMethodSelect.addEventListener("change", updateValues);
+
+// Initial update
+updateValues();
+
+// Rest of your code for other functionalities...
+});
+	</script>
 {% endblock %}

@@ -60,7 +60,7 @@ class Product
     #[ORM\OneToOne(mappedBy: 'product', targetEntity: Report::class, cascade: ['persist', 'remove'])]
     private $report;
 
-    #[ORM\OneToMany(mappedBy: 'product', targetEntity: OrderItem::class, orphanRemoval: true)]
+    #[ORM\ManyToMany(targetEntity: OrderItem::class, mappedBy: 'products')]
     private $orderItems;
 
     public function __construct()
@@ -70,7 +70,13 @@ class Product
 
     public function __toString()
     {
-        return $this->name;
+        $str = $this->name . ' [৳' . $this->price . ']';
+
+        if ($this->isStockOut) {
+            $str .= ' (Out of Stock)';
+        }
+
+        return $str;
     }
 
     public function getId(): ?int
@@ -251,7 +257,7 @@ class Product
     {
         if (!$this->orderItems->contains($orderItem)) {
             $this->orderItems[] = $orderItem;
-            $orderItem->setProduct($this);
+            $orderItem->addProduct($this);
         }
 
         return $this;
@@ -260,10 +266,7 @@ class Product
     public function removeOrderItem(OrderItem $orderItem): self
     {
         if ($this->orderItems->removeElement($orderItem)) {
-            // set the owning side to null (unless already changed)
-            if ($orderItem->getProduct() === $this) {
-                $orderItem->setProduct(null);
-            }
+            $orderItem->removeProduct($this);
         }
 
         return $this;

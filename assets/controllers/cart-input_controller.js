@@ -18,6 +18,19 @@ export default class extends Controller {
 
         let totalPrice = document.getElementById('totalPrice').innerHTML;
         document.getElementById('totalPrice').innerHTML = Number(totalPrice) + Number(this.priceValue);
+
+        let deliveryCharge;
+
+        const shippingMethodSelect = document.getElementById("checkout_shippingMethod");
+        const selectedOptionText = shippingMethodSelect.options[shippingMethodSelect.selectedIndex].text;
+        const match = selectedOptionText.match(/\d+/);
+
+        if (match && match[0]) {
+            deliveryCharge = parseInt(match[0]);
+        }
+
+        document.getElementById('deliveryCharge').innerHTML = Number(deliveryCharge);
+        document.getElementById('grandTotal').innerHTML = Number(totalPrice) + Number(this.priceValue) + Number(deliveryCharge);
     }
 
     async subtract() {
@@ -35,6 +48,19 @@ export default class extends Controller {
 
             let totalPrice = document.getElementById('totalPrice').innerHTML;
             document.getElementById('totalPrice').innerHTML = Number(totalPrice) - Number(this.priceValue);
+
+            let deliveryCharge;
+
+            const shippingMethodSelect = document.getElementById("checkout_shippingMethod");
+            const selectedOptionText = shippingMethodSelect.options[shippingMethodSelect.selectedIndex].text;
+            const match = selectedOptionText.match(/\d+/);
+
+            if (match && match[0]) {
+                deliveryCharge = parseInt(match[0]);
+            }
+
+            document.getElementById('deliveryCharge').innerHTML = Number(deliveryCharge);
+            document.getElementById('grandTotal').innerHTML = Number(totalPrice) - Number(this.priceValue) + Number(deliveryCharge);
         }
     }
 }

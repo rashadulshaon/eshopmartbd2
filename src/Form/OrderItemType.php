@@ -12,8 +12,20 @@ class OrderItemType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('product')
-            ->add('quantity')
+            ->add('products', null, [
+                'multiple' => true,
+                'row_attr' => [
+                    'class' => 'itemProduct col-md-6'
+                ]
+            ])
+            ->add('quantity', null, [
+                'row_attr' => [
+                    'class' => 'itemQuantity col-md-6',
+                ],
+                'attr' => [
+                    'min' => "1"
+                ]
+            ])
         ;
     }
 

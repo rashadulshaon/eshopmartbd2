@@ -44,6 +44,10 @@ class Order
     #[ORM\Column(type: 'boolean')]
     private $isPaid = false;
 
+    #[Assert\Count(
+        min: 1,
+        minMessage: 'Minimum 1 item is required.',
+    )]
     #[ORM\OneToMany(mappedBy: 'productOrder', targetEntity: OrderItem::class, orphanRemoval: true, cascade: ['persist'])]
     private $orderItems;
 
@@ -54,6 +58,7 @@ class Order
     #[ORM\JoinColumn(nullable: false)]
     private $shippingMethod;
 
+    #[Assert\NotNull()]
     #[ORM\ManyToOne(targetEntity: Customer::class, inversedBy: 'orders')]
     #[ORM\JoinColumn(nullable: false)]
     private $customer;

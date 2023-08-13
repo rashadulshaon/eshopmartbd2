@@ -3,6 +3,7 @@
 namespace App\Admin;
 
 use App\Entity\Customer;
+use App\Entity\Order;
 use App\Enum\OrderStateEnum;
 use App\Form\OrderItemType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
@@ -13,7 +14,9 @@ use Sonata\AdminBundle\Form\Type\CollectionType;
 use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\HttpFoundation\Exception\BadRequestException;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 final class OrderAdmin extends AbstractAdmin
 {
@@ -42,21 +45,73 @@ final class OrderAdmin extends AbstractAdmin
     {
         $form
             ->add('customer', ModelListType::class, [
-                'class' => Customer::class
+                'class' => Customer::class,
+                'row_attr' => [
+                    'class' => 'col-md-12'
+                ]
             ])
-            ->add('shippingMethod')
             ->add('orderItems', CollectionType::class, [
                 'entry_type' => OrderItemType::class,
                 'by_reference' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
+                'row_attr' => [
+                    'class' => 'col-md-12 orderItems'
+                ]
             ])
-            ->add('note')
-            ->add('discount')
-            ->add('isPaid')
-            ->add('isUnique')
+            ->add('subTotal', IntegerType::class, [
+                'mapped' => false,
+                'row_attr' => [
+                    'class' => 'col-md-3'
+                ],
+                'attr' => [
+                    'class' => 'subTotal'
+                ],
+                'disabled' => true
+            ])
+            ->add('shippingMethod', null, [
+                'label' => 'Delivery Cost',
+                'row_attr' => [
+                    'class' => 'col-md-3'
+                ],
+                'attr' => [
+                    'class' => 'shippingMethod'
+                ],
+            ])
+            ->add('discount', null, [
+                'row_attr' => [
+                    'class' => 'col-md-3'
+                ],
+                'attr' => [
+                    'class' => 'discount',
+                    'min' => '0'
+                ],
+            ])
+            ->add('grandTotal', IntegerType::class, [
+                'mapped' => false,
+                'row_attr' => [
+                    'class' => 'col-md-3'
+                ],
+                'attr' => [
+                    'class' => 'grandTotal'
+                ],
+                'disabled' => true
+            ])
+            ->add('isPaid', null, [
+                'row_attr' => [
+                    'class' => 'col-md-2'
+                ]
+            ])
+            ->add('note', null, [
+                'row_attr' => [
+                    'class' => 'col-md-12'
+                ]
+            ])
             ->add('orderState', EnumType::class, [
-                'class' => OrderStateEnum::class
+                'class' => OrderStateEnum::class,
+                'row_attr' => [
+                    'class' => 'col-md-12'
+                ]
             ]);
     }
 
@@ -127,9 +182,9 @@ final class OrderAdmin extends AbstractAdmin
             ->add('address')
             ->add('shippingMethod')
             ->add('orderItems')
-            ->add('discount')
             ->add('subTotal')
             ->add('deliveryCost')
+            ->add('discount')
             ->add('totalCost')
             ->add('isPaid')
             ->add('placedAt')
@@ -140,12 +195,14 @@ final class OrderAdmin extends AbstractAdmin
 
     public function prePersist(object $order): void
     {
+        $this->singleProductValidation($order);
         $this->calculatePrice($order);
         $this->setCustomerInfo($order);
     }
 
     public function preUpdate(object $order): void
     {
+        $this->singleProductValidation($order);
         $this->calculatePrice($order);
     }
 
@@ -154,7 +211,7 @@ final class OrderAdmin extends AbstractAdmin
         $totalPrice = 0;
 
         foreach ($order->getOrderItems() as $item) {
-            $item->setPrice($item->getProduct()->getPrice() * $item->getQuantity());
+            $item->setPrice($item->getProducts()[0]->getPrice() * $item->getQuantity());
             $totalPrice += $item->getPrice();
         }
 
@@ -185,5 +242,14 @@ final class OrderAdmin extends AbstractAdmin
         }
 
         return $choices;
+    }
+
+    private function singleProductValidation(Order $order)
+    {
+        foreach($order->getOrderItems() as $item) {
+            if (count($item->getProducts()) != 1) {
+                throw new BadRequestHttpException('Select only 1 product per item');
+            }
+        }
     }
 }

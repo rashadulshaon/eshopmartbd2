@@ -25,25 +25,80 @@ final class ProductAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $form): void
     {
         $form
-            ->add('name')
-            ->add('brand', ModelType::class, [
-                'required' => false
+            ->add('name', null, [
+                'row_attr' => [
+                    'class' => 'col-md-4'
+                ]
             ])
-            ->add('category', ModelType::class)
-            ->add('wholesalePrice', IntegerType::class, ['required' => false])
-            ->add('regularPrice', TextType::class, ['required' => true])
-            ->add('price')
-            ->add('isStockOut')
-            ->add('firstImage', ProductImageType::class, ['required' => $this->isCurrentRoute('create')])
-            ->add('secondImage', ProductImageType::class, ['required' => false])
-            ->add('thirdImage', ProductImageType::class, ['required' => false])
-            ->add('summary', TextareaType::class, ['required' => false])
-            ->add('description', CKEditorType::class, ['required' => false]);
+            ->add('brand', ModelType::class, [
+                'required' => false,
+                'row_attr' => [
+                    'class' => 'col-md-4'
+                ]
+            ])
+            ->add('category', ModelType::class, [
+                'row_attr' => [
+                    'class' => 'col-md-4'
+                ]
+            ])
+            ->add('wholesalePrice', IntegerType::class, [
+                'required' => false,
+                'row_attr' => [
+                    'class' => 'col-md-4'
+                ]
+            ])
+            ->add('regularPrice', TextType::class, [
+                'required' => true,
+                'row_attr' => [
+                    'class' => 'col-md-4'
+                ]
+            ])
+            ->add('price', null, [
+                'row_attr' => [
+                    'class' => 'col-md-4'
+                ]
+            ])
+            ->add('firstImage', ProductImageType::class, [
+                'required' => $this->isCurrentRoute('create'),
+                'row_attr' => [
+                    'class' => 'col-md-4'
+                ]
+            ])
+            ->add('secondImage', ProductImageType::class, [
+                'required' => false,
+                'row_attr' => [
+                    'class' => 'col-md-4'
+                ]
+            ])
+            ->add('thirdImage', ProductImageType::class, [
+                'required' => false,
+                'row_attr' => [
+                    'class' => 'col-md-4'
+                ]
+            ])
+            ->add('isStockOut', null, [
+                'row_attr' => [
+                    'class' => 'col-md-12'
+                ]
+            ])
+            ->add('summary', TextareaType::class, [
+                'required' => false,
+                'row_attr' => [
+                    'class' => 'col-md-12'
+                ]
+            ])
+            ->add('description', CKEditorType::class, [
+                'required' => false,
+                'row_attr' => [
+                    'class' => 'col-md-12'
+                ]
+            ]);
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagrid): void
     {
         $datagrid
+            ->add('name')
             ->add('wholesalePrice')
             ->add('regularPrice')
             ->add('price')

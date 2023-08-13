@@ -11,6 +11,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 final class AdminAdmin extends AbstractAdmin
 {
@@ -46,7 +47,9 @@ final class AdminAdmin extends AbstractAdmin
     {
         $form
             ->add('email')
-            ->add('plainPassword')
+            ->add('plainPassword', PasswordType::class, [
+                'required' => true
+            ])
             ->add('type', EnumType::class, [
                 'class' => RoleTypeEnum::class,
             ])

@@ -48,7 +48,9 @@
 						<div class="px-md-4 col-lg-6" {{stimulus_controller('product-page')}}>
 							<input type="hidden" value="{{product.id}}" {{stimulus_target('product-page', 'productId')}}>
 							<h1 class="h2 mb-1">{{ product.name }}</h1>
-							<h3 class="h1 text-primary mb-4">৳{{ product.price }}<span class="text-muted text-decoration-line-through fs-5 ms-3 align-middle">৳{{ product.regularPrice }}</span>
+							<h3 class="h1 text-primary mb-4">৳<span>{{ product.price }}</span>
+								<span class="text-muted text-decoration-line-through fs-5 ms-3 align-middle">৳<span>{{ product.regularPrice }}</span>
+								</span>
 							</h3>
 							<span class="d-block text-muted mb-2">পরিমাণ</span>
 							<div class="input-group mb-4">
@@ -71,7 +73,7 @@
 										{{ phone }}</a>
 								{% endif %}
 							{% endfor %}
-							<div {{stimulus_target('product-page', 'addedToCartMessage')}} id="addedToCartMessage" class="alert alert-primary mt-2 d-none" role="alert">
+							<div {{stimulus_target('product-page', 'addedToCartMessage')}} id="addedToCartMessage" class="alert alert-success mt-2 d-none" role="alert">
 								Added to cart!
 							</div>
 							<div class="my-5">
