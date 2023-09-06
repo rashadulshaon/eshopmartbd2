@@ -16,20 +16,20 @@
 									<div class="carousel-inner" {{ stimulus_controller('lightbox') }} data-lightbox-options-value='{"selector": ".carousel-item a"}'>
 										<div class="carousel-item active">
 											<a href="{{ vich_uploader_asset(product.firstImage) }}">
-												<img class="cover-fit w-100" src="{{ vich_uploader_asset(product.firstImage) }}" height="425px" width="380px" alt="Product Image 1">
+												<img class="w-100" src="{{ vich_uploader_asset(product.firstImage) }}" height="425px" width="380px" alt="Product Image 1">
 											</a>
 										</div>
 										{% if product.secondImage is not null %}
 											<div class="carousel-item">
 												<a href="{{ vich_uploader_asset(product.secondImage) }}">
-													<img class="cover-fit w-100" src="{{ vich_uploader_asset(product.secondImage) }}" height="425px" width="380px" alt="Product Image 2">
+													<img class="w-100" src="{{ vich_uploader_asset(product.secondImage) }}" height="425px" width="380px" alt="Product Image 2">
 												</a>
 											</div>
 										{% endif %}
 										{% if product.thirdImage is not null %}
 											<div class="carousel-item">
 												<a href="{{ vich_uploader_asset(product.thirdImage) }}">
-													<img class="cover-fit w-100" src="{{ vich_uploader_asset(product.thirdImage) }}" height="425px" width="380px" alt="Product Image 3">
+													<img class="w-100" src="{{ vich_uploader_asset(product.thirdImage) }}" height="425px" width="380px" alt="Product Image 3">
 												</a>
 											</div>
 										{% endif %}

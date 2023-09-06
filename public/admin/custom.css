@@ -20,3 +20,7 @@ table.sonata-ba-list {
 .sidebar-menu li a .fas {
     margin-right: 15px;
 }
+
+.editable-input * {
+    font-size: 17px;
+}

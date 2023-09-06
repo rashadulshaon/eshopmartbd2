@@ -15,6 +15,8 @@ sonata_admin:
     assets:
         extra_stylesheets:
             - 'admin/custom.css'
+        extra_javascripts:
+            - admin/custom.js
 
 sonata_block:
     blocks:

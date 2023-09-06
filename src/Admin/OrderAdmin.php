@@ -48,7 +48,26 @@ final class OrderAdmin extends AbstractAdmin
                 'class' => Customer::class,
                 'row_attr' => [
                     'class' => 'col-md-12'
-                ]
+                ],
+                'by_reference' => false
+            ])
+            ->add('customerName', null, [
+                'label' => 'Billing Name',
+                'row_attr' => [
+                    'class' => 'col-md-6'
+                ],
+            ])
+            ->add('customerPhone', null, [
+                'label' => 'Billing Phone',
+                'row_attr' => [
+                    'class' => 'col-md-6'
+                ],
+            ])
+            ->add('address', null, [
+                'label' => 'Billing Address',
+                'row_attr' => [
+                    'class' => 'col-md-12'
+                ],
             ])
             ->add('orderItems', CollectionType::class, [
                 'entry_type' => OrderItemType::class,
@@ -137,20 +156,19 @@ final class OrderAdmin extends AbstractAdmin
         $list
             ->add('id')
             ->add('customerName', null, [
-                'editable' => true
+                'editable' => true,
+                'label' => 'Billing Name'
             ])
             ->add('customerPhone', null, [
-                'editable' => true
+                'editable' => true,
+                'label' => 'Billing Phone'
             ])
             ->add('address', null, [
-                'editable' => true
+                'editable' => true,
+                'label' => 'Billing Address'
             ])
-            ->add('shippingMethod')
             ->add('orderItems')
             ->add('totalCost')
-            ->add('isPaid', null, [
-                'editable' => true
-            ])
             ->add('placedAt')
             ->add('note', null, [
                 'editable' => true
@@ -159,9 +177,6 @@ final class OrderAdmin extends AbstractAdmin
                 'label' => 'Status',
                 'choices' => $this->getStatusAsChoices(),
                 'mapped' => false,
-                'editable' => true
-            ])
-            ->add('isUnique', null, [
                 'editable' => true
             ])
             ->add(ListMapper::NAME_ACTIONS, null, [
@@ -178,9 +193,15 @@ final class OrderAdmin extends AbstractAdmin
         $show
             ->add('id')
             ->add('customer')
-            ->add('customerPhone')
-            ->add('address')
-            ->add('shippingMethod')
+            ->add('customerName', null, [
+                'label' => 'Billing Name'
+            ])
+            ->add('customerPhone', null, [
+                'label' => 'Billing Phone'
+            ])
+            ->add('address', null, [
+                'label' => 'Billing Address'
+            ])
             ->add('orderItems')
             ->add('subTotal')
             ->add('deliveryCost')
@@ -197,7 +218,6 @@ final class OrderAdmin extends AbstractAdmin
     {
         $this->singleProductValidation($order);
         $this->calculatePrice($order);
-        $this->setCustomerInfo($order);
     }
 
     public function preUpdate(object $order): void
@@ -218,17 +238,6 @@ final class OrderAdmin extends AbstractAdmin
         $order->setSubTotal($totalPrice - $order->getDiscount());
         $order->setDeliveryCost($order->getShippingMethod()->getCost());
         $order->setTotalCost($order->getSubTotal() + $order->getDeliveryCost());
-    }
-
-    private function setCustomerInfo(object $order)
-    {
-        if (!$order->getCustomer()) {
-            throw new BadRequestException('Customer field should not be blank');
-        }
-
-        $order->setCustomerName($order->getCustomer()->getName());
-        $order->setCustomerPhone($order->getCustomer()->getPhone());
-        $order->setAddress($order->getCustomer()->getLocation());
     }
 
     private function getStatusAsChoices()
