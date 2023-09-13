@@ -62,9 +62,9 @@
 								<strong class="d-block text-danger mb-1 mb-md-3">স্টক শেষ!</strong>
 							{% endif %}
 							<div class="d-flex">
-								<button {{stimulus_action('product-page', 'directCheckout')}} class="btn py-1 py-md-2 w-100 rounded-0 btn-primary me-2 text-uppercase{{ product.isStockOut ? ' disabled' : '' }}">
+								<button {{stimulus_action('product-page', 'directCheckout')}} class="btn py-2 py-md-2 w-100 rounded-0 btn-primary me-2 text-uppercase{{ product.isStockOut ? ' disabled' : '' }}">
 									<i class="fas fa-shopping-cart me-1"></i>অর্ডার করুন</button>
-								<button {{stimulus_action('product-page', 'addToCart')}} class="btn py-1 py-md-2 w-100 rounded-0 border-secondary text-uppercase{{ product.isStockOut ? ' disabled' : '' }}">+ কার্টে রাখুন</button><br>
+								<button {{stimulus_action('product-page', 'addToCart')}} class="btn py-2 py-md-2 w-100 rounded-0 border-secondary text-uppercase{{ product.isStockOut ? ' disabled' : '' }}">+ কার্টে রাখুন</button><br>
 							</div>
 							{% for phone in orderPhones() %}
 								{% if phone != 'X' %}
