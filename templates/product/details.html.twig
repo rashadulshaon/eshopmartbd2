@@ -5,7 +5,7 @@
 	{{ siteTitle() }}
 {% endblock %}
 {% block body %}
-	<section class="container mt-5">
+	<section class="container mt-3 mt-md-5">
 		<div class="product-details">
 			<div class="row">
 				<div class="col-md-8">
@@ -16,20 +16,20 @@
 									<div class="carousel-inner" {{ stimulus_controller('lightbox') }} data-lightbox-options-value='{"selector": ".carousel-item a"}'>
 										<div class="carousel-item active">
 											<a href="{{ vich_uploader_asset(product.firstImage) }}">
-												<img class="w-100" src="{{ vich_uploader_asset(product.firstImage) }}" height="425px" width="380px" alt="Product Image 1">
+												<img class="cover-fit w-100" src="{{ vich_uploader_asset(product.firstImage) }}" height="425px" width="380px" alt="Product Image 1">
 											</a>
 										</div>
 										{% if product.secondImage is not null %}
 											<div class="carousel-item">
 												<a href="{{ vich_uploader_asset(product.secondImage) }}">
-													<img class="w-100" src="{{ vich_uploader_asset(product.secondImage) }}" height="425px" width="380px" alt="Product Image 2">
+													<img class="cover-fit w-100" src="{{ vich_uploader_asset(product.secondImage) }}" height="425px" width="380px" alt="Product Image 2">
 												</a>
 											</div>
 										{% endif %}
 										{% if product.thirdImage is not null %}
 											<div class="carousel-item">
 												<a href="{{ vich_uploader_asset(product.thirdImage) }}">
-													<img class="w-100" src="{{ vich_uploader_asset(product.thirdImage) }}" height="425px" width="380px" alt="Product Image 3">
+													<img class="cover-fit w-100" src="{{ vich_uploader_asset(product.thirdImage) }}" height="425px" width="380px" alt="Product Image 3">
 												</a>
 											</div>
 										{% endif %}
@@ -48,27 +48,27 @@
 						<div class="px-md-4 col-lg-6" {{stimulus_controller('product-page')}}>
 							<input type="hidden" value="{{product.id}}" {{stimulus_target('product-page', 'productId')}}>
 							<h1 class="h2 mb-1">{{ product.name }}</h1>
-							<h3 class="h1 text-primary mb-4">৳<span>{{ product.price }}</span>
+							<h3 class="h1 text-primary mb-2 mb-md-4">৳<span>{{ product.price }}</span>
 								<span class="text-muted text-decoration-line-through fs-5 ms-3 align-middle">৳<span>{{ product.regularPrice }}</span>
 								</span>
 							</h3>
 							<span class="d-block text-muted mb-2">পরিমাণ</span>
-							<div class="input-group mb-4">
-								<button {{stimulus_action('product-page', 'subtraction')}} id="substractQuantity" class="btn bg-transparent border-0 border-start border-top border-bottom border-primary{{ product.isStockOut ? ' disabled' : '' }}" type="button">-</button>
-								<input {{stimulus_target('product-page', 'quantity')}} type="number" id="quantity" class="form-control border-0 border-top border-bottom border-primary{{ product.isStockOut ? ' disabled' : '' }}" value="1" min="1" {{ product.isStockOut ? ' disabled' : '' }}>
-								<button {{stimulus_action('product-page', 'addition')}} id="addQuantity" class="btn bg-transparent border-0 border-end border-top border-bottom border-primary{{ product.isStockOut ? ' disabled' : '' }}" type="button">+</button>
+							<div class="input-group mb-2 mb-md-4">
+								<button {{stimulus_action('product-page', 'subtraction')}} id="substractQuantity" class="py-1 py-md-2 btn bg-transparent border-0 border-start border-top border-bottom border-primary{{ product.isStockOut ? ' disabled' : '' }}" type="button">-</button>
+								<input {{stimulus_target('product-page', 'quantity')}} type="number" id="quantity" class="py-1 py-md-2 form-control border-0 border-top border-bottom border-primary{{ product.isStockOut ? ' disabled' : '' }}" value="1" min="1" {{ product.isStockOut ? ' disabled' : '' }}>
+								<button {{stimulus_action('product-page', 'addition')}} id="addQuantity" class="py-1 py-md-2 btn bg-transparent border-0 border-end border-top border-bottom border-primary{{ product.isStockOut ? ' disabled' : '' }}" type="button">+</button>
 							</div>
 							{% if product.isStockOut %}
-								<strong class="d-block text-danger mb-3">স্টক শেষ!</strong>
+								<strong class="d-block text-danger mb-1 mb-md-3">স্টক শেষ!</strong>
 							{% endif %}
 							<div class="d-flex">
-								<button {{stimulus_action('product-page', 'directCheckout')}} class="btn btn-lg w-100 rounded-0 btn-primary me-2 text-uppercase{{ product.isStockOut ? ' disabled' : '' }}">
+								<button {{stimulus_action('product-page', 'directCheckout')}} class="btn py-1 py-md-2 w-100 rounded-0 btn-primary me-2 text-uppercase{{ product.isStockOut ? ' disabled' : '' }}">
 									<i class="fas fa-shopping-cart me-1"></i>অর্ডার করুন</button>
-								<button {{stimulus_action('product-page', 'addToCart')}} class="btn btn-lg w-100 rounded-0 border-secondary text-uppercase{{ product.isStockOut ? ' disabled' : '' }}">+ কার্টে রাখুন</button><br>
+								<button {{stimulus_action('product-page', 'addToCart')}} class="btn py-1 py-md-2 w-100 rounded-0 border-secondary text-uppercase{{ product.isStockOut ? ' disabled' : '' }}">+ কার্টে রাখুন</button><br>
 							</div>
 							{% for phone in orderPhones() %}
 								{% if phone != 'X' %}
-									<a class="btn btn-lg d-block rounded-0 btn-success mt-3 text-uppercase{{ product.isStockOut ? ' disabled' : '' }}" href="tel:{{ phone }}">
+									<a class="btn py-1 py-md-2 d-block rounded-0 btn-success mt-3 text-uppercase{{ product.isStockOut ? ' disabled' : '' }}" href="tel:{{ phone }}">
 										<i class="fas fa-phone-alt me-1"></i>
 										{{ phone }}</a>
 								{% endif %}
@@ -76,7 +76,7 @@
 							<div {{stimulus_target('product-page', 'addedToCartMessage')}} id="addedToCartMessage" class="alert alert-success mt-2 d-none" role="alert">
 								Added to cart!
 							</div>
-							<div class="my-5">
+							<div class="my-3 my-md-5">
 								<hr>
 								{% for shippingMethod in shippingMethods %}
 									<i class="fas fa-truck text-primary me-1"></i>
