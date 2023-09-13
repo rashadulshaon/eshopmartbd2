@@ -48,7 +48,7 @@
 						<div class="px-md-4 col-lg-6" {{stimulus_controller('product-page')}}>
 							<input type="hidden" value="{{product.id}}" {{stimulus_target('product-page', 'productId')}}>
 							<h1 class="h2 mb-1">{{ product.name }}</h1>
-							<h3 class="h1 text-primary mb-2 mb-md-4">৳<span>{{ product.price }}</span>
+							<h3 class="h1 text-primary mb-2 mb-md-4">৳<strong>{{ product.price }}</strong>
 								<span class="text-muted text-decoration-line-through fs-5 ms-3 align-middle">৳<span>{{ product.regularPrice }}</span>
 								</span>
 							</h3>
