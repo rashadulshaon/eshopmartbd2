@@ -10,6 +10,7 @@ sonata_admin:
         dashboard: 'Admin/dashboard.html.twig'
     options:
         skin: skin-blue
+        use_icheck: false
     # search: false
     show_mosaic_button: false
     assets:
