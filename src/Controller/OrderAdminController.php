@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Enum\OrderStateEnum;
 use App\Repository\OrderRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Sonata\AdminBundle\Controller\CRUDController;
 use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
 
 final class OrderAdminController extends CRUDController
 {
     public function __construct(
-        private OrderRepository $orderRepo
-    ) {
-    }
+        private OrderRepository $orderRepo,
+        private EntityManagerInterface $em
+    ) {}
 
     public function batchActionExport(ProxyQueryInterface $query)
     {
@@ -55,5 +57,50 @@ final class OrderAdminController extends CRUDController
         return $this->render('order/invoice.html.twig', [
             'orders' => $data
         ]);
+    }
+
+    public function batchActionMarkAsShipped(ProxyQueryInterface $query)
+    {
+        $data = $query->execute();
+
+        foreach ($data as $item) {
+            $item->setOrderState(OrderStateEnum::Shipped);
+        }
+
+        $this->em->flush();
+
+        $this->addFlash('success', 'Order status has been set to shipped.');
+
+        return $this->redirectToRoute('admin_app_order_list');
+    }
+
+    public function batchActionMarkAsCompleted(ProxyQueryInterface $query)
+    {
+        $data = $query->execute();
+
+        foreach ($data as $item) {
+            $item->setOrderState(OrderStateEnum::Completed);
+        }
+
+        $this->em->flush();
+
+        $this->addFlash('success', 'Order status has been set to completed.');
+
+        return $this->redirectToRoute('admin_app_order_list');
+    }
+
+    public function batchActionMarkAsCanceled(ProxyQueryInterface $query)
+    {
+        $data = $query->execute();
+
+        foreach ($data as $item) {
+            $item->setOrderState(OrderStateEnum::Canceled);
+        }
+
+        $this->em->flush();
+
+        $this->addFlash('success', 'Order status has been set to canceled.');
+
+        return $this->redirectToRoute('admin_app_order_list');
     }
 }

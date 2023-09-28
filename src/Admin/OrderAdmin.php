@@ -15,7 +15,6 @@ use Sonata\AdminBundle\Form\Type\ModelListType;
 use Sonata\AdminBundle\Show\ShowMapper;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 final class OrderAdmin extends AbstractAdmin
@@ -30,6 +29,21 @@ final class OrderAdmin extends AbstractAdmin
         $actions['invoice'] = [
             'label'            => 'Generate Invoice',
             'ask_confirmation' => false,
+        ];
+
+        $actions['markAsShipped'] = [
+            'label'            => 'Mark as Shipped',
+            'ask_confirmation' => true,
+        ];
+
+        $actions['markAsCompleted'] = [
+            'label'            => 'Mark as Complete',
+            'ask_confirmation' => true,
+        ];
+
+        $actions['markAsCanceled'] = [
+            'label'            => 'Mark as Canceled',
+            'ask_confirmation' => true,
         ];
 
         return $actions;
