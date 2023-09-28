@@ -24,3 +24,8 @@ table.sonata-ba-list {
 .editable-input * {
     font-size: 17px;
 }
+
+input[type="checkbox"] {
+    width: 18px; /* Adjust the width as needed */
+    height: 18px; /* Adjust the height as needed */
+}
