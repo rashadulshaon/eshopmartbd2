@@ -1,7 +1,11 @@
-console.log("working");
-
-let searchForm = document.getElementById("search-form");
 document.getElementById("search-icon").addEventListener("click", (e) => {
-  let searchFormDisplay = searchForm.style.display;
-  console.log(searchFormDisplay);
+  let mobileSearch = document.getElementById("mobileSearch");
+
+  // mobileSearch.style.display = 'flex';
+
+  if (mobileSearch.style.display != 'flex') {
+    mobileSearch.style.display = 'flex';
+  } else {
+    mobileSearch.style.display = 'none';
+  }
 });
