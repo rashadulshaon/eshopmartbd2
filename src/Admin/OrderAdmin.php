@@ -183,7 +183,9 @@ final class OrderAdmin extends AbstractAdmin
             ])
             ->add('orderItems')
             ->add('totalCost')
-            ->add('placedAt')
+            ->add('placedAt', null, [
+                'format' => 'M d, Y h:i:s A'
+            ])
             ->add('note', null, [
                 'editable' => true
             ])
