@@ -10,8 +10,7 @@ class CategoryExtension extends AbstractExtension
 {
     public function __construct(
         private CategoryRepository $categoryRepo,
-    ) {
-    }
+    ) {}
     public function getFunctions()
     {
         return [
@@ -21,6 +20,6 @@ class CategoryExtension extends AbstractExtension
 
     public function renderCategory()
     {
-        return $this->categoryRepo->findBy([], null, 7);
+        return $this->categoryRepo->findBy([], null, 4);
     }
 }
