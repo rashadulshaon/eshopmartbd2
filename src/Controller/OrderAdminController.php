@@ -84,6 +84,7 @@ final class OrderAdminController extends CRUDController
             $row['ItemType(*)'] = 'parcel';
             $row['MerchantOrderId'] = $item->getId();
             $row['RecipientName(*)'] = $item->getCustomerName();
+            $row['RecipientPhone(*)'] = $item->getCustomerPhone();
             $row['RecipientCity(*)'] = '';
             $row['RecipientAddress(*)'] = $item->getAddress();
             $row['AmountToCollect(*)'] = $item->getTotalCost();
