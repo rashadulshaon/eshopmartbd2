@@ -26,6 +26,16 @@ final class OrderAdmin extends AbstractAdmin
             'ask_confirmation' => false,
         ];
 
+        $actions['steadFastExport'] = [
+            'label'            => 'Steadfast Export',
+            'ask_confirmation' => false,
+        ];
+
+        $actions['pathaoExport'] = [
+            'label'            => 'Pathao Export',
+            'ask_confirmation' => false,
+        ];
+
         $actions['invoice'] = [
             'label'            => 'Generate Invoice',
             'ask_confirmation' => false,

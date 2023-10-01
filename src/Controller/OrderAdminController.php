@@ -50,6 +50,59 @@ final class OrderAdminController extends CRUDController
         return $this->json($orders);
     }
 
+    public function batchActionSteadFastExport(ProxyQueryInterface $query)
+    {
+        $data = $query->execute();
+        $orders = [];
+
+        foreach ($data as $item) {
+            $row = [];
+
+            $row['Invoice'] = $item->getId();
+            $row['Name'] = $item->getCustomerName();
+            $row['Address'] = $item->getAddress();
+            $row['Phone'] = $item->getCustomerPhone();
+            $row['Amount'] = $item->getTotalCost();
+            $row['Note'] = $item->getNote();
+            $row['Contact Name'] = $item->getCustomerName();
+            $row['Contact Phone'] = $item->getCustomerPhone();
+
+            $orders[] = $row;
+        }
+
+        return $this->json($orders);
+    }
+
+    public function batchActionPathaoExport(ProxyQueryInterface $query)
+    {
+        $data = $query->execute();
+        $orders = [];
+
+        foreach ($data as $item) {
+            $row = [];
+
+            $row['ItemType(*)'] = 'parcel';
+            $row['MerchantOrderId'] = $item->getId();
+            $row['RecipientName(*)'] = $item->getCustomerName();
+            $row['RecipientCity(*)'] = '';
+            $row['RecipientAddress(*)'] = $item->getAddress();
+            $row['AmountToCollect(*)'] = $item->getTotalCost();
+
+            $qty = 0;
+
+            foreach ($item->getOrderItems() as $lineItem) {
+                $qty += $lineItem->getQuantity();
+            }
+
+            $row['ItemQuantity(*)'] = $qty;
+            $row['ItemDesc'] = $item->getOrderItems()[0]->getProducts()[0]->getName();
+
+            $orders[] = $row;
+        }
+
+        return $this->json($orders);
+    }
+
     public function batchActionInvoice(ProxyQueryInterface $query)
     {
         $data = $query->execute();
