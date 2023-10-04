@@ -20,6 +20,6 @@ class CategoryExtension extends AbstractExtension
 
     public function renderCategory()
     {
-        return $this->categoryRepo->findBy([], null, 4);
+        return $this->categoryRepo->findBy([], null, 8);
     }
 }
