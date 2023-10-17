@@ -42,7 +42,8 @@ final class OrderAdminController extends CRUDController
             $row['Total Cost'] = $item->getTotalCost();
             $row['Is Paid'] = $item->isIsPaid();
             $row['Placed At'] = $item->getPlacedAt()->format('Y-m-d');
-            $row['Note'] = $item->getNote();
+            $row['Note'] = $item->getOrderItems()[0]->getQuantity() . ' x ' . $item->getOrderItems()[0]->getProducts()[0]->getName();
+            ;
 
             $orders[] = $row;
         }
@@ -63,7 +64,7 @@ final class OrderAdminController extends CRUDController
             $row['Address'] = $item->getAddress();
             $row['Phone'] = $item->getCustomerPhone();
             $row['Amount'] = $item->getTotalCost();
-            $row['Note'] = $item->getNote();
+            $row['Note'] = $item->getOrderItems()[0]->getQuantity() . ' x ' . $item->getOrderItems()[0]->getProducts()[0]->getName();
             $row['Contact Name'] = $item->getCustomerName();
             $row['Contact Phone'] = $item->getCustomerPhone();
 
