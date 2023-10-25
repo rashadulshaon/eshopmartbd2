@@ -137,7 +137,7 @@ const productTitleElements = document.querySelectorAll(".product-name");
 
 productTitleElements.forEach(element => {
 const longText = element.textContent;
-const shortenedText = longText.length <= 30 ? longText : longText.slice(0, 30) + "...";
+const shortenedText = longText.length <= 22 ? longText : longText.slice(0, 22) + "...";
 element.textContent = shortenedText;
 });
 });
