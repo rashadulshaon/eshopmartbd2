@@ -1,5 +1,5 @@
-<header class="sticky-top bg-secondary sticky-top pt-md-3">
-	<nav class="navbar navbar-expand-lg navbar-dark">
+<header class="sticky-top bg-white sticky-top py-md-3 mb-5">
+	<nav class="navbar navbar-expand-lg">
 		<div class="container px-3 px-md-5">
 			<a class="navbar-brand" href="/">
 				{% if siteLogo().image|default(null) %}
@@ -10,8 +10,8 @@
 
 			</a>
 			<form id="search-form" class="d-none d-md-flex input-group mx-auto w-50" method="GET" action="{{ path('app_product_search', {query: 'q'}) }}">
-				<input type="search" name="searchQuery" class="form-control bg-white" placeholder="সার্চ করুন যেকোনো কিছু..." style="border-top-left-radius: 50px; border-bottom-left-radius: 50px; border: 2px solid #E50914;">
-				<button class="btn btn-primary bg-primary" type="submit" id="button-addon2" style="border-top-right-radius: 50px; border-bottom-right-radius: 50px;">
+				<input type="search" name="searchQuery" class="form-control bg-white" placeholder="সার্চ করুন যেকোনো কিছু..." style="border: 2px solid #00d394;">
+				<button class="btn btn-primary bg-primary" type="submit" id="button-addon2" style="">
 					<i class="fas fa-search"></i>
 				</button>
 			</form>
@@ -31,23 +31,11 @@
 				{% endif %}
 			</a>
 			<form class="input-group mx-auto mt-2" id="mobileSearch" method="GET" action="{{ path('app_product_search', {query: 'q'}) }}">
-				<input type="search" name="searchQuery" type="text" class="form-control bg-white" placeholder="সার্চ করুন যেকোনো কিছু..." style="border-top-left-radius: 50px; border-bottom-left-radius: 50px; border: 2px solid #E50914;">
-				<button class="btn btn-primary bg-primary" type="submit" type="button" id="button-addon3" style="border-top-right-radius: 50px; border-bottom-right-radius: 50px;">
+				<input type="search" name="searchQuery" type="text" class="form-control bg-white" placeholder="সার্চ করুন যেকোনো কিছু..." style="border: 2px solid #00d394;">
+				<button class="btn btn-primary bg-primary" type="submit" type="button" id="button-addon3" style="">
 					<i class="fas fa-search"></i>
 				</button>
 			</form>
 		</div>
 	</nav>
-	<div class="container-fuild d-none d-md-block mt-4 bg-secondary text-white">
-		<ul class="container mb-0 px-5 border-top border-bottom border-dark pb-1">
-			<a href="{{ path('app_product_archive') }}" class="{% if app.request.attributes.get('_route') == 'app_home' or app.request.attributes.get('_route') == 'app_product_archive' %}text-primary{% else %}text-white{% endif%}">
-				<li class="d-inline-block me-2 py-3">সকল</li>
-			</a>
-			{% for category in renderCategory() %}
-				<a href="{{ path('app_product_category', {id: category.id}) }}" class="{% if app.request.attributes.get('_route') == 'app_product_category' and app.request.attributes.get('_route_params').id == category.id %}text-primary{% else %} text-white{% endif%}">
-					<li class="d-inline-block mx-4 py-3">{{ category.name }}</li>
-				</a>
-			{% endfor %}
-		</ul>
-	</div>
 </header>

@@ -1,53 +1,61 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<section class="container-fluid bg-secondary text-white mb-64 hero p-0">
-		<section class="container px-3 px-md-5">
-			<div class="row align-items-center">
-				<div class="col-xl-6 py-5 py-lg-0">
-					<h1 class="text-uppercase hero-heading">সিজনের সবকিছু পান আপনার হাতের নাগালে</h1>
-					<h4 class="d-block text-uppercase fw-normal mb-5">সবথেকে দ্রুত সময়ে...</h4>
-					<a href="tel:{{ sitePhone() }}" class="btn btn-primary text-uppercase hero-btn"><i class="fas fa-phone-alt me-1"></i>অর্ডার করতে কল: <strong>{{ sitePhone() }}</strong>
-						
-					</a>
-				</div>
-				<div class="col-lg-6">
-					<img class="cover-fit hero-image" src="{{ asset('build/images/hero_img.png') }}" alt="Featured Image">
-				</div>
-			</div>
-		</section>
-	</section>
-
 	{% if app.request.attributes.get('_route') == 'app_home' %}
-		<section id="new" class="container px-md-4 pt-4 mb-5 rounded-3" style="background-color: #fff0a5;">
-			<h3 class="text-uppercase mb-4">
+		<section class="container mb-5">
+			<section class="row">
+				<section class="col-3">
+					<div class="list-group">
+						{% for category in renderCategory() %}
+							<a href="{{ path('app_product_category', {id: category.id}) }}" class="list-group-item list-group-item-action" aria-current="true">
+
+								<div class="d-flex w-100 justify-content-between">
+									<h6 class="mb-1">{{ category.name }}</h6>
+									<small>&#10095;</small>
+								</div>
+							</a>
+						{% endfor %}
+
+					</div>
+				</section>
+				<section class="col">asdf</section>
+			</section>
+		</section>
+
+	{% endif %}
+	{% if app.request.attributes.get('_route') == 'app_home' %}
+		<section id="new" class="container px-md-4 pt-4 mb-5 rounded-3" style="background-color: #cce1ff;">
+			<h4 class="text-uppercase mb-4">
 				<i class="fas fa-fire"></i>
 				নতুন কলেকশন
-			</h3>
+			</h4>
 
 			<div class="row shop-row">
 				{% for product in latestProducts %}
 					<div class="col-6 col-lg-2">
-						<div class="mb-4 product-card shadow-sm border">
+						<div class="mb-4 product-card shadow-sm border rounded-3">
 							<a href="{{ path('app_product_details', {id: product.id}) }}" class="product-title">
 								<div class="product-image bg-white">
-									<span class="position-absolute top-0 start-100 translate-middle badge bg-danger px-2">
+									<span class="position-absolute top-0 start-100 translate-middle badge bg-danger px-2 rounded-circle">
 										{{ (((product.regularPrice - product.price) / product.regularPrice) * 100)|round ~ '%' }}
 										<br>
 										ছাড়
 										<span class="visually-hidden">unread messages</span>
 									</span>
-									<img class="cover-fit product-archive-img" src="{{ vich_uploader_asset(product.firstImage) }}" height="200px" width="100%" alt="Product Image">
+									<img class="cover-fit product-archive-img" src="{{ vich_uploader_asset(product.firstImage) }}" height="175px" width="100%" alt="Product Image">
 								</div>
-								<div class="bg-white">
-									<div class="p-3">
-										<h5 class="mb-2 fs-6 product-name">{{ product.name }}</h5>
+								<div class="bg-white rounded-3">
+									<div class="p-3 rounded-3">
 										<span class="text-decoration-line-through product-price small">৳{{ product.regularPrice }}</span>
 										<span class="text-primary small fw-bold">৳{{ product.price }}</span>
+										<h5 class="mt-2 fs-6 product-name">{{ product.name }}</h5>
 									</div>
-									<a href="{{ path('app_checkout', {id:product.id, qty:1}) }}" class="btn btn-primary w-100 {% if product.isIsStockOut %}disabled{% endif %}">
-										<small>
-											<i class="fas fa-shopping-cart me-1"></i>অর্ডার করুন</a>
+									<div class="text-center p-2 pt-0 rounded-3">
+										<a href="{{ path('app_checkout', {id:product.id, qty:1}) }}" class="btn btn-primary w-100 rounded-pill py-2 {% if product.isIsStockOut %}disabled{% endif %}">
+											<small>
+												<i class="fas fa-shopping-cart me-1"></i>অর্ডার করুন
+											</a>
+										</div>
 									</small>
 								</div>
 							</a>
@@ -58,29 +66,8 @@
 		</section>
 	{% endif %}
 
-	{% if app.request.attributes.get('_route') == 'app_home' %}
-		<section id="categories" class="container">
-			<h3 class="text-uppercase mb-4">
-				<i class="fas fa-swatchbook"></i>ক্যাটাগরি
-			</h3>
-
-			<div class="row shop-row">
-				{% for category in categories %}
-					<div class="col-6 col-lg-2 mb-3">
-						<div class="rounded-3 py-5 text-center" {% if category.image %} style="background-image: url('{{ vich_uploader_asset(category.image) }}') !important; background-size: cover;background-position: center;" {% else %} style="background-color: #1fc8db;
-																																																																																																																																																																																																																																																																																																																																		    background-image: linear-gradient(140deg, #EADEDB 0%, #BC70A4 50%, #ff005c 75%);" {% endif %}>
-							<a href="{{ path('app_product_category', {id: category.id}) }}" class="btn btn-primary rounded-3 px-4 border border-3 border-warning">
-								{{ category.name }}
-							</a>
-						</div>
-					</div>
-				{% endfor %}
-			</div>
-		</section>
-	{% endif %}
-
 	<section id="shop" class="container">
-		<h3 class="text-uppercase mb-4">
+		<h4 class="text-uppercase mb-4">
 			<i class="fas fa-swatchbook"></i>
 			{% if category|default(null) %}
 				{{ 'ক্যাটাগরি - ' ~ category.name }}
@@ -91,31 +78,34 @@
 			{% else %}
 				{{ 'প্রোয়োজনীয় প্রোডাক্ট' }}
 			{% endif %}
-		</h3>
+		</h4>
 
 		<div class="row shop-row">
 			{% for product in products %}
 				<div class="col-6 col-lg-2">
-					<div class="mb-4 product-card shadow-sm border">
+					<div class="mb-4 product-card shadow-sm border rounded-3">
 						<a href="{{ path('app_product_details', {id: product.id}) }}" class="product-title">
 							<div class="product-image bg-white">
-								<span class="position-absolute top-0 start-100 translate-middle badge bg-danger px-2">
+								<span class="position-absolute top-0 start-100 translate-middle badge bg-danger px-2 rounded-circle">
 									{{ (((product.regularPrice - product.price) / product.regularPrice) * 100)|round ~ '%' }}
 									<br>
 									ছাড়
 									<span class="visually-hidden">unread messages</span>
 								</span>
-								<img class="cover-fit product-archive-img" src="{{ vich_uploader_asset(product.firstImage) }}" height="200px" width="100%" alt="Product Image">
+								<img class="cover-fit product-archive-img" src="{{ vich_uploader_asset(product.firstImage) }}" height="175px" width="100%" alt="Product Image">
 							</div>
-							<div class="bg-white">
-								<div class="p-3">
-									<h5 class="mb-2 fs-6 product-name">{{ product.name }}</h5>
+							<div class="bg-white rounded-3">
+								<div class="p-3 rounded-3">
 									<span class="text-decoration-line-through product-price small">৳{{ product.regularPrice }}</span>
 									<span class="text-primary small fw-bold">৳{{ product.price }}</span>
+									<h5 class="mt-2 fs-6 product-name">{{ product.name }}</h5>
 								</div>
-								<a href="{{ path('app_checkout', {id:product.id, qty:1}) }}" class="btn btn-primary w-100 {% if product.isIsStockOut %}disabled{% endif %}">
-									<small>
-										<i class="fas fa-shopping-cart me-1"></i>অর্ডার করুন</a>
+								<div class="text-center p-2 pt-0 rounded-3">
+									<a href="{{ path('app_checkout', {id:product.id, qty:1}) }}" class="btn btn-primary w-100 rounded-pill py-2 {% if product.isIsStockOut %}disabled{% endif %}">
+										<small>
+											<i class="fas fa-shopping-cart me-1"></i>অর্ডার করুন
+										</a>
+									</div>
 								</small>
 							</div>
 						</a>
@@ -127,7 +117,7 @@
 			<div class="pagination-wrapper">{{ knp_pagination_render(products) }}</div>
 		{% else %}
 			<div class="text-center load-more-btn">
-				<a href="{{ path('app_product_archive') }}" class="btn btn-primary text-uppercase ms-auto">সকল প্রোডাক্ট দেখুন >></a>
+				<a href="{{ path('app_product_archive') }}" class="btn btn-primary text-uppercase ms-auto rounded-pill">সকল প্রোডাক্ট দেখুন >></a>
 			</div>
 		{% endif %}
 	</section>
