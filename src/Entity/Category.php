@@ -21,10 +21,6 @@ class Category
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class, orphanRemoval: true)]
     private $products;
 
-    #[ORM\OneToOne(targetEntity: ProductImage::class, cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: true)]
-    private $image;
-
     public function __construct()
     {
         $this->products = new ArrayCollection();
@@ -78,18 +74,6 @@ class Category
                 $product->setCategory(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getImage(): ?ProductImage
-    {
-        return $this->image;
-    }
-
-    public function setImage(?ProductImage $image): self
-    {
-        $this->image = $image;
 
         return $this;
     }

@@ -2,7 +2,6 @@
 
 namespace App\Admin;
 
-use App\Form\ProductImageType;
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -19,7 +18,7 @@ final class CategoryAdmin extends AbstractAdmin
     {
         $form
             ->add('name')
-            ->add('image', ProductImageType::class, ['required' => false]);
+        ;
     }
 
     protected function configureListFields(ListMapper $list): void
