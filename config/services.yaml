@@ -136,3 +136,8 @@ services:
         class: App\Admin\SiteLogoAdmin
         tags:
             - { name: sonata.admin, model_class: App\Entity\SiteLogo, controller: ~, manager_type: orm, group: admin, label: SiteLogo }
+
+    admin.slide:
+        class: App\Admin\SlideAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Slide, controller: ~, manager_type: orm, group: Slide, label: Slide, on_top: true, icon: fas fa-images }

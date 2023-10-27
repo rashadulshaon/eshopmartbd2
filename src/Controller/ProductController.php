@@ -9,6 +9,7 @@ use App\Repository\BrandRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ProductRepository;
 use App\Repository\ShippingMethodRepository;
+use App\Repository\SlideRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +29,8 @@ class ProductController extends AbstractController
         CategoryRepository $categoryRepo,
         BrandRepository $brandRepo,
         PaginatorInterface $paginator,
-        ShippingMethodRepository $shippingMethodRepo
+        ShippingMethodRepository $shippingMethodRepo,
+        private SlideRepository $slideRepo
     ) {
         $this->productRepo = $productRepo;
         $this->categoryRepo = $categoryRepo;
@@ -41,6 +43,7 @@ class ProductController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
+        $slides = $this->slideRepo->findAll();
         $latestProducts = $this->productRepo->findBy([], ['id' => 'DESC'], 12);
         $randomProducts = $this->productRepo->findBy([], null, 30);
         shuffle($randomProducts);
@@ -49,7 +52,8 @@ class ProductController extends AbstractController
         return $this->render('product/index_2.html.twig', [
             'latestProducts' => $latestProducts,
             'products' => $randomProducts,
-            'categories' => $categories
+            'categories' => $categories,
+            'slides' => $slides
         ]);
     }
 
