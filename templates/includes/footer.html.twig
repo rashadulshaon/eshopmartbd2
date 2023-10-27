@@ -1,47 +1,41 @@
 <!-- Footer -->
 <footer class="site-footer bg-secondary text-white border-top py-64">
 	<div class="container">
-		<div class="row align-items-center">
-			<div class="col-lg-4">
-				{% if siteLogo().image|default(null) %}
-					<img src="{{ vich_uploader_asset(siteLogo().image) }}" width="206" height="48" alt="logo">
-				{% else %}
-					<h1 class="h3">{{ siteTitle() }}</h1>
-				{% endif %}
-				<p>
-					<span class="d-block mb-2">সিজনের সবকিছু পান আপনার হাতের নাগালে...</span>
-					<a class="d-block mb-3" href="mailto:{{ siteEmail() }}">{{ siteEmail() }}</a>
-					<span class="d-block">{{ shopAddress() }}</span>
-				</p>
-			</div>
-			<div class="col-lg-2"></div>
-			<div class="col-lg-2"></div>
-			<div class="col-lg-2"></div>
-			<div class="col-lg-2">
-				<div class="footer-social text-start text-lg-center">
-					<h5 class="text-uppercase fw-600 mb-2">আমাদের সোশ্যাল মিডিয়া</h5>
-					<ul class="list-inline">
-						<li class="list-inline-item">
-							<a href="{{ facebookUrl() }}">
-								<i class="fab fa-facebook"></i>
-							</a>
-						</li>
-						<li class="list-inline-item">
-							<a href="{{ instagramUrl() }}">
-								<i class="fab fa-instagram"></i>
-							</a>
-						</li>
-						<li class="list-inline-item">
-							<a href="{{ youtubeUrl() }}">
-								<i class="fab fa-youtube"></i>
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
+		<div class="align-items-center text-lg-center">
+			{% if siteLogo().image|default(null) %}
+				<img src="{{ vich_uploader_asset(siteLogo().image) }}" width="206" height="48" alt="logo">
+			{% else %}
+				<h1 class="h3">{{ siteTitle() }}</h1>
+			{% endif %}
+			<p>
+				<span class="d-block mb-2">সিজনের সবকিছু পান আপনার হাতের নাগালে...</span>
+				<a class="d-block mb-3" href="mailto:{{ siteEmail() }}">{{ siteEmail() }}</a>
+				<span class="d-block">{{ shopAddress() }}</span>
+			</p>
 		</div>
-		<div
-			class="text-center">{# <img src="{{ asset('build/images/payment_methods.png') }}" width="100%" class="mt-5 payment-gateway-img"> #}
+
+		<div class="footer-social text-start text-lg-center">
+			<h5 class="text-uppercase fw-600 mb-2">আমাদের সোশ্যাল মিডিয়া</h5>
+			<ul class="list-inline">
+				<li class="list-inline-item">
+					<a href="{{ facebookUrl() }}">
+						<i class="fab fa-facebook"></i>
+					</a>
+				</li>
+				<li class="list-inline-item">
+					<a href="{{ instagramUrl() }}">
+						<i class="fab fa-instagram"></i>
+					</a>
+				</li>
+				<li class="list-inline-item">
+					<a href="{{ youtubeUrl() }}">
+						<i class="fab fa-youtube"></i>
+					</a>
+				</li>
+			</ul>
 		</div>
 	</div>
-</footer>
+	<div
+		class="text-center">{# <img src="{{ asset('build/images/payment_methods.png') }}" width="100%" class="mt-5 payment-gateway-img"> #}
+	</div>
+</div></footer>
